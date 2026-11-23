@@ -1,0 +1,92 @@
+/* DRE e painel do cliente: só o que estilo.css não tem */
+.dre-topo{margin-top:14px}
+.dre-dica{color:var(--medio);font-size:13.5px;margin:6px 0 10px}
+.dre-h3{margin-top:18px}
+
+/* cliente */
+.dre-cliente-linha{align-items:end}
+.dre-cliente-botoes{align-self:end}
+.dre-amostra{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.dre-cor{width:28px;height:28px;border-radius:8px;border:1px solid var(--linha);display:inline-block}
+.dre-amostra img{max-height:42px;max-width:140px;border:1px solid var(--linha);border-radius:6px;background:#fff;padding:2px}
+.dre-amostra small{color:var(--medio)}
+.dre-form-cliente{display:flex;flex-direction:column;gap:12px}
+.dre-form-cliente input[type=color]{height:40px;padding:3px;cursor:pointer}
+.dre-form-cliente input[type=file]{font-size:13px}
+.dre-logo-prev{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dre-logo-prev img{max-height:56px;max-width:180px;border:1px solid var(--linha);border-radius:6px;background:#fff;padding:3px}
+.dre-logo-prev small{color:var(--medio)}
+
+/* arquivo */
+.dre-lido{margin-top:12px}
+.dre-lido select{border:1px solid var(--linha);border-radius:8px;padding:6px 8px;background:#fff;max-width:100%}
+.dre-check{display:flex;gap:9px;align-items:flex-start;margin-top:12px;font-size:14px;cursor:pointer}
+.dre-check input{margin-top:3px;width:18px;height:18px;flex:none}
+.dre-ignoradas{margin-top:8px}
+.dre-ignoradas summary{cursor:pointer;font-weight:600;color:var(--azul-escuro)}
+.dre-ignoradas p{margin-top:8px}
+.dre-ignoradas li{font-size:13px;color:var(--texto);word-break:break-word}
+
+/* modelo */
+.dre-modelo{border:1px solid var(--linha);border-radius:12px;padding:10px 14px;background:var(--papel)}
+.dre-modelo>summary{cursor:pointer;font-weight:700;color:var(--marinho);padding:4px 0}
+.dre-nome-modelo{margin:12px 0 4px;max-width:420px}
+.dre-grupo{margin-top:14px}
+.dre-grupo h3{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--medio);margin-bottom:6px}
+.dre-linha-modelo{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.dre-linha-modelo input,.dre-subtotal-modelo input{flex:1;min-width:0;border:1px solid var(--linha);border-radius:8px;padding:7px 9px;background:#fff}
+.btn.dre-mini{padding:6px 9px;font-size:13px;flex:none}
+.btn.dre-mais{padding:5px 10px;font-size:13px;color:var(--azul-escuro);border-style:dashed}
+.dre-subtotal-modelo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;padding:8px 10px;background:#EEF2F8;border-radius:10px}
+.dre-subtotal-modelo input{font-weight:700;color:var(--marinho)}
+.dre-subtotal-modelo small{color:var(--medio);flex-basis:100%;padding-left:18px}
+.dre-botoes-modelo{margin-top:16px;padding-top:12px;border-top:1px solid var(--linha)}
+.dre-copiar{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center;max-width:100%}
+.dre-copiar select{border:1px solid var(--linha);border-radius:8px;padding:7px 8px;background:#fff;max-width:100%}
+
+/* ligações */
+.dre-confirmar{margin-top:10px}
+.dre-ligacoes{margin-top:0}
+.dre-ligacoes select{border:1px solid var(--linha);border-radius:8px;padding:6px 8px;background:#fff;min-width:200px;max-width:340px}
+.dre-cat span:first-child{margin-right:6px}
+.dre-cat .selo{margin-right:4px}
+.selo.dre-selo-nova{background:#E5EEFB;color:var(--azul-escuro)}
+tr.dre-nova td{background:#F2F7FD}
+tr.dre-falta td:first-child{box-shadow:inset 4px 0 0 var(--vermelho)}
+#area-ligacoes .tabela-rolagem{margin-top:10px}
+
+/* resultado */
+.dre-bloco{background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:14px;margin-top:14px;min-width:0}
+.dre-graficos .dre-bloco{margin-top:14px}
+.dre-pontos{list-style:none}
+.dre-pontos li{border-left:4px solid var(--azul);background:#EEF5FC;border-radius:8px;padding:9px 12px;margin-bottom:8px;font-size:14px}
+.dre-pontos li.ruim{border-color:var(--vermelho);background:var(--vermelho-fundo)}
+.dre-pontos li.bom{border-color:var(--verde);background:var(--verde-fundo)}
+.dre-tabela small{color:var(--medio);font-weight:400}
+tr.dre-clicavel{cursor:pointer}
+tr.dre-clicavel:hover td,tr.dre-clicavel:focus td{background:#F2F7FD;outline:none}
+tr.dre-aberta td{background:#E5EEFB}
+tr.dre-subtotal td:first-child{box-shadow:inset 4px 0 0 var(--azul)}
+tr.dre-parte-titulo td{color:var(--medio);background:var(--papel);font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+tr.dre-parte td{color:var(--medio)}
+tr.dre-falta.dre-parte td{color:var(--vermelho)}
+.dre-conferencia{margin-top:12px}
+.dre-conf-topo{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.dre-conf-topo h3{margin:0}
+.dre-conferencia td{white-space:normal;min-width:90px}
+.dre-botoes-final{margin-top:12px}
+
+/* impressão: só o painel */
+#painel-impressao{display:none}
+@media print{
+  body.imprimindo-painel>*:not(#painel-impressao){display:none!important}
+  body.imprimindo-painel #painel-impressao{display:block}
+  body.imprimindo-painel{background:#fff}
+  @page{margin:10mm}
+}
+
+@media (max-width:760px){
+  .dre-ligacoes select{min-width:170px}
+  .dre-linha-modelo{flex-wrap:wrap}
+  .dre-linha-modelo input{flex-basis:100%}
+}

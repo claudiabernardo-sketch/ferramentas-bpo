@@ -1,0 +1,164 @@
+{
+  "ferramenta": "monitor-de-volume",
+  "versao": 1,
+  "salvoEm": "2026-11-23T12:00:00.000Z",
+  "dados": {
+    "versao": 1,
+    "clientes": [
+      {
+        "id": "mwtk8rdrq3pcb",
+        "nome": "Padaria Modelo",
+        "honorario": 1500,
+        "mesBase": "2026-08",
+        "meses": {
+          "2026-08": {
+            "fontes": {
+              "padaria-modelo-extrato-ago-a-nov-2026.xlsx": 120
+            },
+            "contas": 0,
+            "funcionarios": 8,
+            "notas": null,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-09": {
+            "fontes": {
+              "padaria-modelo-extrato-ago-a-nov-2026.xlsx": 125
+            },
+            "contas": 0,
+            "funcionarios": 8,
+            "notas": null,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-10": {
+            "fontes": {
+              "padaria-modelo-extrato-ago-a-nov-2026.xlsx": 140
+            },
+            "contas": 0,
+            "funcionarios": 9,
+            "notas": null,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-11": {
+            "fontes": {
+              "padaria-modelo-extrato-ago-a-nov-2026.xlsx": 160
+            },
+            "contas": 0,
+            "funcionarios": 9,
+            "notas": null,
+            "contasManual": false,
+            "lancManual": null
+          }
+        }
+      },
+      {
+        "id": "mwtk8rdrzv2ar",
+        "nome": "Ótica Visão Clara",
+        "honorario": 900,
+        "mesBase": "2026-08",
+        "meses": {
+          "2026-08": {
+            "fontes": {
+              "otica-visao-clara-extrato-ago-a-nov-2026.csv": 80
+            },
+            "contas": 0,
+            "funcionarios": 3,
+            "notas": 40,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-09": {
+            "fontes": {
+              "otica-visao-clara-extrato-ago-a-nov-2026.csv": 82
+            },
+            "contas": 0,
+            "funcionarios": 3,
+            "notas": 41,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-10": {
+            "fontes": {
+              "otica-visao-clara-extrato-ago-a-nov-2026.csv": 85
+            },
+            "contas": 0,
+            "funcionarios": 3,
+            "notas": 43,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-11": {
+            "fontes": {
+              "otica-visao-clara-extrato-ago-a-nov-2026.csv": 88
+            },
+            "contas": 0,
+            "funcionarios": 3,
+            "notas": 45,
+            "contasManual": false,
+            "lancManual": null
+          }
+        }
+      },
+      {
+        "id": "mwtk8rdrhvtvq",
+        "nome": "Studio Pilates Leve",
+        "honorario": 700,
+        "mesBase": "2026-08",
+        "meses": {
+          "2026-08": {
+            "fontes": {
+              "studio-pilates-leve-conta-corrente.ofx": 40
+            },
+            "contas": 0,
+            "funcionarios": 2,
+            "notas": 20,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-09": {
+            "fontes": {
+              "studio-pilates-leve-conta-corrente.ofx": 42
+            },
+            "contas": 0,
+            "funcionarios": 2,
+            "notas": 20,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-10": {
+            "fontes": {
+              "studio-pilates-leve-conta-corrente.ofx": 44,
+              "studio-pilates-leve-conta-digital.ofx": 10
+            },
+            "contas": 0,
+            "funcionarios": 2,
+            "notas": 21,
+            "contasManual": false,
+            "lancManual": null
+          },
+          "2026-11": {
+            "fontes": {
+              "studio-pilates-leve-conta-corrente.ofx": 45,
+              "studio-pilates-leve-conta-digital.ofx": 12
+            },
+            "contas": 0,
+            "funcionarios": 2,
+            "notas": 22,
+            "contasManual": false,
+            "lancManual": null
+          }
+        }
+      }
+    ],
+    "premissas": {
+      "lancamento": 2,
+      "nota": 3,
+      "funcionario": 15,
+      "conta": 60
+    },
+    "limite": 0.2,
+    "ultimoBackup": "2026-11-23T12:00:00.000Z"
+  }
+}

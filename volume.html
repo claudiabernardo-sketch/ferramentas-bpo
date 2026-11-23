@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor de volume | Ferramentas do BPO</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="volume.css">
+</head>
+<body>
+<header class="barra"><div class="barra-dentro">
+  <a class="marca" href="index.html"><span class="logo">B</span><span><b>Ferramentas do BPO</b><small>Cláudia Bernardo</small></span></a>
+  <nav class="abas-ferramentas">
+    <a href="index.html">Início</a>
+    <a href="dre.html">DRE e painel</a>
+    <a href="volume.html" class="ativo">Monitor de volume</a>
+    <a href="margem.html">Vendas e margem</a>
+  </nav>
+</div></header>
+
+<main class="pagina">
+  <h1>Monitor de volume</h1>
+  <p class="sub">Acompanhe, cliente por cliente, quanto trabalho cada um gera por mês (lançamentos, contas bancárias, funcionários e notas fiscais) e saiba quando é hora de rever o preço. A comparação é sempre com o mês em que o preço atual foi combinado.</p>
+
+  <div id="avisos-topo"></div>
+
+  <div class="botoes vol-topo nao-imprimir">
+    <button type="button" class="btn" id="btn-backup">Salvar backup</button>
+    <button type="button" class="btn" id="btn-restaurar">Restaurar backup</button>
+    <button type="button" class="btn" id="btn-excel">Baixar em Excel</button>
+  </div>
+
+  <section class="passo nao-imprimir" id="passo-clientes">
+    <div class="passo-titulo"><span class="passo-num">1</span><h2>Cadastre os clientes</h2></div>
+    <p class="vol-dica">Informe o honorário de hoje e o mês em que esse preço foi combinado. Se não souber o mês, deixe em branco: a ferramenta usa o primeiro mês com dados.</p>
+    <form id="form-cliente" class="linha-campos vol-form" autocomplete="off">
+      <label class="campo"><span>Nome do cliente</span><input id="novo-nome" required maxlength="80" placeholder="Ex.: Padaria Modelo"></label>
+      <label class="campo"><span>Honorário por mês (R$)</span><input id="novo-honorario" inputmode="decimal" placeholder="Ex.: 1.500,00"></label>
+      <label class="campo"><span>Mês em que o preço foi combinado</span><input id="novo-mes" type="month"></label>
+      <div class="campo vol-campo-botao"><button type="submit" class="btn btn-forte">Adicionar cliente</button></div>
+    </form>
+  </section>
+
+  <section class="passo nao-imprimir" id="passo-arquivos">
+    <div class="passo-titulo"><span class="passo-num">2</span><h2>Traga os extratos ou relatórios de lançamentos</h2></div>
+    <p class="vol-dica">Pode soltar vários arquivos de uma vez: extratos do banco (Excel, CSV ou OFX) ou relatórios de lançamentos do sistema (Conta Azul, Nibo, Omie). Cada arquivo diferente no mesmo mês conta como uma conta bancária. Mandou o mesmo arquivo de novo? A contagem antiga dele é trocada pela nova.</p>
+    <div class="linha-campos">
+      <label class="campo"><span>Esses arquivos são do cliente</span><select id="cliente-arquivos"></select></label>
+    </div>
+    <div id="sem-cliente" class="nota atencao" hidden>Cadastre um cliente no passo 1 antes de trazer os arquivos.</div>
+    <div id="area-arquivos" class="vol-area"></div>
+    <div id="pendentes"></div>
+    <div class="botoes vol-guardar" id="guardar-bloco" hidden>
+      <button type="button" class="btn btn-forte" id="btn-guardar">Guardar a contagem no cliente</button>
+      <button type="button" class="btn" id="btn-limpar">Descartar arquivos</button>
+      <span id="guardar-motivo" class="vol-motivo"></span>
+    </div>
+  </section>
+
+  <section class="passo" id="passo-painel">
+    <div class="passo-titulo"><span class="passo-num">3</span><h2>Painel: quem precisa de revisão de preço</h2></div>
+    <details class="vol-premissas nao-imprimir" id="premissas">
+      <summary>Tempos de referência e limite de alerta</summary>
+      <div class="nota atencao">Exemplo. Troque pelos tempos de referência da sua metodologia (quem faz sem automação), não pelo seu tempo real.</div>
+      <div class="linha-campos vol-form">
+        <label class="campo"><span>Minutos por lançamento</span><input id="p-lancamento" type="number" min="0" step="0.5" inputmode="decimal"></label>
+        <label class="campo"><span>Minutos por nota fiscal</span><input id="p-nota" type="number" min="0" step="0.5" inputmode="decimal"></label>
+        <label class="campo"><span>Minutos por funcionário na folha</span><input id="p-funcionario" type="number" min="0" step="0.5" inputmode="decimal"></label>
+        <label class="campo"><span>Minutos por conta bancária (conciliação)</span><input id="p-conta" type="number" min="0" step="1" inputmode="decimal"></label>
+        <label class="campo"><span>Alertar quando crescer (%)</span><input id="p-limite" type="number" min="1" step="1" inputmode="decimal"></label>
+      </div>
+      <p class="vol-dica">Rapidez não vira desconto: o preço segue o tempo de referência, e a sua eficiência fica com você.</p>
+    </details>
+    <div id="painel"></div>
+  </section>
+
+  <section class="passo" id="detalhe" hidden></section>
+
+  <p class="rodape">Seus dados ficam só neste navegador. Nada é enviado para a internet.</p>
+</main>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="comum.js"></script>
+<script src="ui.js"></script>
+<script src="volume-logica.js"></script>
+<script src="volume-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRE e painel do cliente | Ferramentas do BPO</title>
+<meta name="description" content="Monte a DRE gerencial a partir do relatório do sistema do cliente, com os nomes e as cores dele, e gere um painel para mandar por e-mail.">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="dre.css">
+</head>
+<body>
+<header class="barra"><div class="barra-dentro">
+  <a class="marca" href="index.html"><span class="logo">B</span><span><b>Ferramentas do BPO</b><small>Cláudia Bernardo</small></span></a>
+  <nav class="abas-ferramentas" aria-label="Ferramentas">
+    <a href="index.html">Início</a>
+    <a href="dre.html" class="ativo">DRE e painel</a>
+    <a href="volume.html">Monitor de volume</a>
+    <a href="margem.html">Vendas e margem</a>
+  </nav>
+</div></header>
+
+<main class="pagina">
+  <h1>DRE e painel do cliente</h1>
+  <p class="sub">Arraste o relatório de lançamentos do sistema do cliente (Conta Azul, Nibo, Omie ou outro) e veja a DRE gerencial com os nomes e as cores dele. Depois baixe o painel para mandar por e-mail ou guardar em PDF. Tudo fica só neste navegador, nada é enviado para a internet.</p>
+
+  <div id="avisos-topo"></div>
+
+  <div class="botoes dre-topo nao-imprimir">
+    <button type="button" class="btn" id="btn-backup">Salvar backup</button>
+    <button type="button" class="btn" id="btn-restaurar">Restaurar backup</button>
+  </div>
+
+  <section class="passo" id="passo-1">
+    <div class="passo-titulo"><span class="passo-num">1</span><h2>Cliente</h2></div>
+    <div id="area-cliente"></div>
+  </section>
+
+  <section class="passo" id="passo-2">
+    <div class="passo-titulo"><span class="passo-num">2</span><h2>Relatório do sistema</h2></div>
+    <div id="area-arquivo"></div>
+  </section>
+
+  <section class="passo" id="passo-3">
+    <div class="passo-titulo"><span class="passo-num">3</span><h2>Modelo da DRE do cliente</h2></div>
+    <div id="area-modelo"></div>
+    <div id="area-ligacoes"></div>
+  </section>
+
+  <section class="passo" id="passo-4">
+    <div class="passo-titulo"><span class="passo-num">4</span><h2>Resultado</h2></div>
+    <div id="area-resultado"></div>
+  </section>
+
+  <p class="rodape">Ferramentas do BPO, Cláudia Bernardo. Funciona sem internet depois de aberta. Os dados ficam guardados só neste navegador: faça backup de vez em quando.</p>
+</main>
+
+<div id="painel-impressao" aria-hidden="true"></div>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="comum.js"></script>
+<script src="ui.js"></script>
+<script src="dre-logica.js"></script>
+<script src="dre-app.js"></script>
+</body>
+</html>

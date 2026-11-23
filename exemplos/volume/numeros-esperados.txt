@@ -1,0 +1,22 @@
+MONITOR DE VOLUME: NÚMEROS ESPERADOS DOS EXEMPLOS
+
+Tempos de referência padrão: 2 min por lançamento, 3 por nota fiscal, 15 por funcionário, 60 por conta bancária. Limite de alerta: 20%.
+Mês base de todos: agosto de 2026. Último mês: novembro de 2026.
+Funcionários e notas fiscais não vêm no extrato: estão só no backup-exemplo-monitor-de-volume.json (Restaurar backup).
+
+Lançamentos por mês (ago, set, out, nov):
+  Padaria Modelo (.xlsx, uma aba "Leia" e a aba "Extrato"; ignora SALDO ANTERIOR, SALDO DO DIA e Total): 120, 125, 140, 160. Linhas de saldo ignoradas: 87, total: 1.
+  Ótica Visão Clara (.csv com ;, ignora SALDO ANTERIOR, S A L D O, SALDO FINAL e ESTORNO TARIFA de valor zero): 80, 82, 85, 88. Saldo ignoradas: 17, valor zero: 4.
+  Studio Pilates Leve, conta corrente (.ofx SGML): 40, 42, 44, 45
+  Studio Pilates Leve, conta digital (.ofx XML, só out e nov): 10, 12
+
+Resultado com o backup de exemplo:
+  Studio Pilates Leve: Revisar preço
+    lançamentos 40 -> 57 (42,5%), contas 1 -> 2, funcionários 2 -> 2, notas 20 -> 22
+    horas de referência 3,83 -> 5,50, honorário por hora R$ 182,61 -> R$ 127,27, honorário proporcional ao volume R$ 1.004,35
+  Padaria Modelo: Revisar preço
+    lançamentos 120 -> 160 (33,3%), contas 1 -> 1, funcionários 8 -> 9, notas não informadas
+    horas de referência 7,00 -> 8,58, honorário por hora R$ 214,29 -> R$ 174,76, honorário proporcional ao volume R$ 1.839,29
+  Ótica Visão Clara: ok
+    lançamentos 80 -> 88 (10,0%), contas 1 -> 1, funcionários 3 -> 3, notas 40 -> 45
+    horas de referência 6,42 -> 6,93, honorário por hora R$ 140,26 -> R$ 129,81, honorário proporcional ao volume R$ 972,47

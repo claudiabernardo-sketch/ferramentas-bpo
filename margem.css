@@ -1,0 +1,38 @@
+/* Vendas e margem: só o que a base comum não tem */
+.ajuda{color:var(--medio);font-size:13px}
+.bloco-arquivo{border:1px solid var(--linha);border-radius:12px;padding:14px;margin-top:12px;background:var(--papel)}
+.bloco-arquivo h3{margin-top:14px}
+.bloco-arquivo .arquivo-lido{justify-content:space-between}
+.bloco-arquivo .arquivo-lido span{min-width:0;overflow-wrap:anywhere}
+.campo-aba{max-width:360px;margin-bottom:10px}
+details.lidas{margin-top:10px;font-size:14px}
+details.lidas summary{cursor:pointer;font-weight:600;color:var(--azul-escuro)}
+details.lidas ul{margin:6px 0 0 18px;max-height:240px;overflow:auto}
+.opcoes-cmv{display:flex;flex-direction:column;gap:10px}
+.opcao{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:1px solid var(--linha);border-radius:10px;padding:10px 12px;cursor:pointer}
+.opcao input[type=radio]{flex:none;width:18px;height:18px}
+.opcao>span{flex:1 1 220px;min-width:0}
+.opcao input[type=text],.opcao input:not([type]){border:1px solid var(--linha);border-radius:8px;padding:7px 9px;width:160px;max-width:100%}
+.opcao small{color:var(--medio)}
+.topo-resultado{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:space-between;margin-bottom:12px}
+.topo-resultado .campo{min-width:200px}
+.secao-res{margin-top:22px}
+td.quebra,th.quebra{white-space:normal;min-width:200px;max-width:420px}
+td .selo{white-space:normal}
+tr.mais-cara td{background:var(--amarelo-fundo)}
+.tabela-classes select{border:1px solid var(--linha);border-radius:8px;padding:5px 7px;background:#fff;max-width:220px}
+.tabela-classes td.mudou select{border-color:var(--azul);background:#EEF5FC}
+.cartao.meio b{color:#8A6500}
+.duas>div{min-width:0}
+@media (max-width:760px){
+  .topo-resultado .campo{min-width:0;width:100%}
+  /* no celular: nome e valor em cima, barra embaixo */
+  .secao-res .bh{grid-template-columns:minmax(0,1fr) auto;row-gap:3px}
+  .secao-res .bh-nome{white-space:normal}
+  .secao-res .bh-trilho{grid-column:1 / -1;order:3}
+  .secao-res .bh-valor{min-width:0}
+}
+@media print{
+  .bloco-arquivo,#passo1,#passo2,#passo3,#passo4,.topo-resultado .botoes{display:none!important}
+  details.dias-ok{display:none}
+}

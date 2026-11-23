@@ -1,0 +1,49 @@
+Movimento financeiro: Padaria Modelo;;;;;;;
+Data;Cliente/Fornecedor;Categoria;Observação;Entrada;Saída;Saldo;Situação
+03/09/2026;Clientes balcão;Vendas balcão;"Vendas do balcão";30.000,00;;30.000,00;Conciliado
+10/09/2026;Clientes de encomenda;Receita de encomendas;"Encomendas de festa";4.000,00;;34.000,00;Conciliado
+20/09/2026;Receita Federal;Impostos (DAS);"DAS do mês anterior";;2.100,00;31.900,00;Conciliado
+06/09/2026;Moinho Trigo Bom;Fornecedores de farinha;"Farinha e açúcar";;9.000,00;22.900,00;Conciliado
+07/09/2026;Laticínios Serra;Insumos;"Ovos, leite e manteiga";;3.000,00;19.900,00;Conciliado
+05/09/2026;Funcionários;Folha de pagamento;"Salários da equipe";;7.000,00;12.900,00;Conciliado
+05/09/2026;Sócios;Pró-labore;"Pró-labore dos sócios";;3.000,00;9.900,00;Conciliado
+10/09/2026;Imobiliária Bairro;Aluguel;"Aluguel do ponto";;4.000,00;5.900,00;Conciliado
+15/09/2026;Distribuidora de Energia;Energia;"Conta de energia";;1.500,00;4.400,00;Conciliado
+16/09/2026;Gás Rápido;Gás de cozinha;"Botijões de gás";;800,00;3.600,00;Conciliado
+17/09/2026;Embala Tudo;Embalagens;"Sacos e caixas";;600,00;3.000,00;Conciliado
+25/09/2026;Banco;Tarifas bancárias;"Tarifas do banco";;80,00;2.920,00;Conciliado
+28/09/2026;Banco;Rendimentos de aplicação;"Rendimento da aplicação";50,00;;2.970,00;Conciliado
+12/09/2026;Banco;Empréstimo bancário;"Parcela do empréstimo do forno";;1.200,00;1.770,00;Conciliado
+03/10/2026;Clientes balcão;Vendas balcão;"Vendas do balcão";32.000,00;;33.770,00;Conciliado
+10/10/2026;Clientes de encomenda;Receita de encomendas;"Encomendas de festa";5.000,00;;38.770,00;Conciliado
+20/10/2026;Receita Federal;Impostos (DAS);"DAS do mês anterior";;2.300,00;36.470,00;Conciliado
+06/10/2026;Moinho Trigo Bom;Fornecedores de farinha;"Farinha e açúcar";;9.500,00;26.970,00;Conciliado
+07/10/2026;Laticínios Serra;Insumos;"Ovos, leite e manteiga";;3.000,00;23.970,00;Conciliado
+05/10/2026;Funcionários;Folha de pagamento;"Salários da equipe";;7.000,00;16.970,00;Conciliado
+05/10/2026;Sócios;Pró-labore;"Pró-labore dos sócios";;3.000,00;13.970,00;Conciliado
+10/10/2026;Imobiliária Bairro;Aluguel;"Aluguel do ponto";;4.000,00;9.970,00;Conciliado
+15/10/2026;Distribuidora de Energia;Energia;"Conta de energia";;1.600,00;8.370,00;Conciliado
+16/10/2026;Gás Rápido;Gás de cozinha;"Botijões de gás";;850,00;7.520,00;Conciliado
+17/10/2026;Embala Tudo;Embalagens;"Sacos e caixas";;650,00;6.870,00;Conciliado
+25/10/2026;Banco;Tarifas bancárias;"Tarifas do banco";;80,00;6.790,00;Conciliado
+28/10/2026;Banco;Rendimentos de aplicação;"Rendimento da aplicação";60,00;;6.850,00;Conciliado
+12/10/2026;Banco;Empréstimo bancário;"Parcela do empréstimo do forno";;1.200,00;5.650,00;Conciliado
+21/10/2026;Cliente balcão;Vendas balcão;"Venda cancelada";500,00;;5.650,00;Cancelado
+03/11/2026;Clientes balcão;Vendas balcão;"Vendas do balcão";31.000,00;;36.650,00;Conciliado
+10/11/2026;Clientes de encomenda;Receita de encomendas;"Encomendas de festa";6.000,00;;42.650,00;Conciliado
+20/11/2026;Receita Federal;Impostos (DAS);"DAS do mês anterior";;2.400,00;40.250,00;Conciliado
+06/11/2026;Moinho Trigo Bom;Fornecedores de farinha;"Farinha e açúcar";;9.800,00;30.450,00;Conciliado
+07/11/2026;Laticínios Serra;Insumos;"Ovos, leite e manteiga";;3.000,00;27.450,00;Conciliado
+05/11/2026;Funcionários;Folha de pagamento;"Salários da equipe";;7.000,00;20.450,00;Conciliado
+05/11/2026;Sócios;Pró-labore;"Pró-labore dos sócios";;3.000,00;17.450,00;Conciliado
+10/11/2026;Imobiliária Bairro;Aluguel;"Aluguel do ponto";;4.000,00;13.450,00;Conciliado
+15/11/2026;Distribuidora de Energia;Energia;"Conta de energia";;1.700,00;11.750,00;Conciliado
+16/11/2026;Gás Rápido;Gás de cozinha;"Botijões de gás";;900,00;10.850,00;Conciliado
+17/11/2026;Embala Tudo;Embalagens;"Sacos e caixas";;700,00;10.150,00;Conciliado
+25/11/2026;Banco;Tarifas bancárias;"Tarifas do banco";;80,00;10.070,00;Conciliado
+28/11/2026;Banco;Rendimentos de aplicação;"Rendimento da aplicação";70,00;;10.140,00;Conciliado
+12/11/2026;Banco;Empréstimo bancário;"Parcela do empréstimo do forno";;1.200,00;8.940,00;Conciliado
+14/11/2026;;Transferência entre contas;"Transferência para conta reserva";;3.000,00;5.940,00;Conciliado
+14/11/2026;;Transferência entre contas;"Transferência recebida da conta principal";3.000,00;;8.940,00;Conciliado
+29/11/2026;Noivos Silva;Receita de encomendas;"Encomenda de casamento (a receber)";1.500,00;;8.940,00;Atrasado
+Total;;;;111.180,00;102.240,00;;
