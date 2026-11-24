@@ -2,6 +2,7 @@ RECORRENTES PARA O CONTA AZUL: NÚMEROS ESPERADOS DOS EXEMPLOS
 
 Cliente fictício: Escritório Modelo. Extratos de dezembro de 2025 a novembro de 2026 (12 meses). Mínimo de meses: 3.
 O arquivo modelo_importacao_EXEMPLO.xlsx é um modelo GENÉRICO de teste. Não é o modelo oficial do Conta Azul.
+O arquivo modelo_formato_conta_azul_SINTETICO.xls é uma cópia SINTÉTICA no formato do modelo do Conta Azul (mesmo cabeçalho, formatos e abas), com exemplos inventados.
 
 Leitura dos extratos:
   escritorio-modelo-conta-corrente-dez25-a-nov26.xlsx: 151 lançamentos (13 linhas de saldo e 1 de total ignoradas)

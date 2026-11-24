@@ -495,8 +495,25 @@
   function assinatura(cabecalho) {
     return cabecalho.map(function (c) { return C.simples(c); }).join('|').replace(/\|+$/, '');
   }
+  // ---------- o modelo de importação do Conta Azul (reconhecido pelo cabeçalho) ----------
+  // Aba "Dados", cabeçalho na linha 1, valor positivo = receita e negativo = despesa.
+  var ASSINATURA_CONTA_AZUL = 'data de competencia|data de vencimento|data de pagamento|valor|categoria|descricao|cliente/fornecedor|cnpj/cpf cliente/fornecedor|centro de custo|observacoes';
+  var MAPA_CONTA_AZUL = ['competencia', 'vencimento', null, 'valor', 'categoria', 'descricao', 'contato', 'documento', null, null];
+  function ehModeloContaAzul(cabecalho) { return assinatura(cabecalho || []) === ASSINATURA_CONTA_AZUL; }
+  function mapaContaAzul() {
+    return MAPA_CONTA_AZUL.map(function (c) { return c ? { modo: 'campo', campo: c } : { modo: 'branco' }; });
+  }
+  // Regra do Conta Azul: sem ' " ! @ # % ¨ & * ( ) ª º § + _ - ? ° [ { } ] : ; e sem espaços sobrando
+  var PROIBIDOS_CONTA_AZUL = /['"!@#%¨&*()ªº§+_\-?°\[\]{}:;]/g;
+  function limparTextoContaAzul(t) {
+    return semFormula(String(t == null ? '' : t).replace(PROIBIDOS_CONTA_AZUL, ' ').replace(/[\s ]+/g, ' ').trim());
+  }
+  // Nenhum texto pode virar fórmula no Excel
+  function semFormula(t) { return String(t).replace(/^[=\s]+/, '').trim(); }
+
   // Para cada coluna do modelo: {modo:'campo', campo} | {modo:'branco'} | {modo:'fixo', valor}
   function detectarMapaModelo(cabecalho) {
+    if (ehModeloContaAzul(cabecalho)) return mapaContaAzul();
     return cabecalho.map(function (nome) {
       if (C.vazio(nome)) return { modo: 'branco' };
       var melhor = null, nota = 0;
@@ -529,9 +546,14 @@
     if (melhor < 0) return { linhaCab: -1, nota: 0, cabecalho: [], exemplo: null };
     var cab = aba.linhas[melhor].map(function (v) { return String(v == null ? '' : v).trim(); });
     while (cab.length && !cab[cab.length - 1]) cab.pop();
-    var ex = aba.brutas && aba.brutas[melhor + 1];
-    var temEx = ex && ex.some(function (c) { return c && !C.vazio(c.v); });
-    return { linhaCab: melhor, nota: nota, cabecalho: cab, exemplo: temEx ? ex : null, linhasAbaixo: Math.max(0, aba.linhas.length - melhor - 1) };
+    return completarAnalise(aba, melhor, cab, nota);
+  }
+  // Linhas de exemplo (todas as que estão abaixo do cabeçalho) e as células do cabeçalho
+  function completarAnalise(aba, linhaCab, cab, nota) {
+    var brutas = aba.brutas || [];
+    var exemplos = brutas.slice(linhaCab + 1, linhaCab + 21).filter(function (l) { return l && l.some(function (c) { return c && !C.vazio(c.v); }); });
+    return { linhaCab: linhaCab, nota: nota, cabecalho: cab, exemplo: exemplos[0] || null, exemplos: exemplos,
+      celulasCab: brutas[linhaCab] || [], linhasAbaixo: Math.max(0, aba.linhas.length - linhaCab - 1), contaAzul: ehModeloContaAzul(cab) };
   }
   function melhorAbaModelo(modelo) {
     var melhor = 0, nota = -1;
@@ -551,7 +573,7 @@
         abas: [{ nome: 'CSV', linhas: linhas, brutas: linhas.map(function (l) { return l.map(function (v) { return { t: 's', v: v }; }); }) }] };
     }
     var livro = XLSX.read(bytes, { type: 'array', cellNF: true, cellDates: false });
-    return { tipo: 'xlsx', nomeArquivo: nomeArquivo, bytes: bytes,
+    return { tipo: 'xlsx', ext: ext === 'xls' ? 'xls' : 'xlsx', nomeArquivo: nomeArquivo, bytes: bytes,
       abas: livro.SheetNames.map(function (nome) { return lerFolha(XLSX, livro.Sheets[nome], nome); }) };
   }
   function lerFolha(XLSX, folha, nome) {
@@ -642,16 +664,30 @@
     return { pagar: 'Pagar', receber: 'Receber' };
   }
   // Formatos por coluna, a partir da linha de exemplo
+  // exemplo: uma linha (lista de células) ou a análise inteira de analisarAbaModelo (usa todas as linhas de exemplo)
   function formatosDoModelo(mapa, exemplo, csvSep) {
+    var an = exemplo && !Array.isArray(exemplo) ? exemplo : null;
+    var linhasEx = an ? an.exemplos || [] : exemplo ? [exemplo] : [];
+    var cabCel = an ? an.celulasCab || [] : [];
     return mapa.map(function (m, i) {
-      var cel = exemplo ? exemplo[i] : null;
-      if (cel && C.vazio(cel.v)) cel = null;
-      if (m.modo !== 'campo') return null;
+      var cels = linhasEx.map(function (l) { return l[i]; }).filter(function (c) { return c && !C.vazio(c.v); });
+      var cel = cels[0] || null;
+      var texto = cels.concat([cabCel[i]]).some(function (c) { return c && c.z === '@'; });
+      if (m.modo !== 'campo') return texto ? { tipo: 'texto', z: '@' } : null;
       var c = campoModelo(m.campo);
       if (c && c.data) return detectarFormatoData(cel);
-      if (c && c.valor) return detectarFormatoValor(cel, csvSep);
-      return null;
+      if (c && c.valor) {
+        var f = detectarFormatoValor(cel, csvSep);
+        if (cels.some(function (x) { return (x.t === 'n' && x.v < 0) || /^-|^\(/.test(String(x.v).trim()); })) f.negativoPagar = true;
+        return f;
+      }
+      if (m.campo === 'documento') return { tipo: 'doc', z: texto ? '@' : null, soDigitos: cel ? /^\d+$/.test(String(cel.v).trim()) : false };
+      return texto ? { tipo: 'texto', z: '@' } : null;
     });
+  }
+  // O sinal do valor separa pagar de receber (o modelo mostra exemplos negativos)
+  function sinalSeparaTipos(mapa, formatos) {
+    return mapa.some(function (m, i) { return m.modo === 'campo' && m.campo === 'valor' && formatos && formatos[i] && formatos[i].negativoPagar; });
   }
 
   function textoObs(it) {
@@ -660,16 +696,22 @@
     return t + '.';
   }
   // Valor de um campo da ferramenta para uma ocorrência. Devolve célula {t, v, z} ou null (em branco)
-  function celulaCampo(campo, oc, formato, textosTipo) {
-    var it = oc.item, txt = function (v) { return v == null || v === '' ? null : { t: 's', v: String(v) }; };
+  // opcoes: {competencia:'vencimento'|'dia1', limpar:bool (regra do Conta Azul), contagem:{limpos}}
+  function celulaCampo(campo, oc, formato, textosTipo, opcoes) {
+    opcoes = opcoes || {};
+    var it = oc.item;
+    var txt = function (v) { return celulaTexto(v, formato, opcoes); };
     switch (campo) {
-      case 'vencimento': case 'competencia': return celulaData(oc.vencimento, formato);
+      case 'vencimento': return celulaData(oc.vencimento, formato);
+      case 'competencia': return celulaData(opcoes.competencia === 'dia1' ? oc.mes + '-01' : oc.vencimento, formato);
       case 'valor': return celulaValor(formato && formato.negativoPagar && it.tipo === 'pagar' ? -oc.valor : oc.valor, formato);
       case 'descricao': return txt(it.descricao || it.nome);
       case 'contato': return txt(it.nome);
       case 'fornecedor': return it.tipo === 'pagar' ? txt(it.nome) : null;
       case 'cliente': return it.tipo === 'receber' ? txt(it.nome) : null;
-      case 'documento': return txt(formatarDoc(it.doc));
+      case 'documento':
+        if (!it.doc || !(it.doc.length === 11 ? cpfValido(it.doc) : cnpjValido(it.doc))) return null;
+        return formato && formato.soDigitos ? { t: 's', v: it.doc, z: formato.z || '@' } : txt(formatarDoc(it.doc));
       case 'categoria': return txt(it.categoria);
       case 'observacoes': return txt(it.obs || textoObs(it));
       case 'conta': return txt(it.conta);
@@ -680,15 +722,29 @@
     }
   }
   // Monta as linhas (listas de células) para colocar abaixo do cabeçalho do modelo
-  function montarLinhasModelo(ocorrencias, mapa, formatos, textosTipo) {
+  function celulaTexto(v, formato, opcoes) {
+    if (v == null || v === '') return null;
+    var orig = String(v), limpo = opcoes.limpar ? limparTextoContaAzul(orig) : semFormula(orig);
+    if (limpo !== orig && opcoes.contagem) opcoes.contagem.limpos++;
+    if (!limpo) return null;
+    var cel = { t: 's', v: limpo };
+    if (formato && (formato.tipo === 'texto' || formato.tipo === 'doc') && formato.z) cel.z = formato.z;
+    return cel;
+  }
+  // opcoes: {competencia, limpar, contagem:{limpos:0}} (a contagem diz quantos textos foram limpos)
+  function montarLinhasModelo(ocorrencias, mapa, formatos, textosTipo, opcoes) {
+    opcoes = opcoes || {};
     return ocorrencias.map(function (oc) {
       return mapa.map(function (m, i) {
-        if (m.modo === 'campo') return celulaCampo(m.campo, oc, formatos && formatos[i], textosTipo);
-        if (m.modo === 'fixo' && !C.vazio(m.valor)) return { t: 's', v: String(m.valor) };
+        var f = formatos && formatos[i];
+        if (m.modo === 'campo') return celulaCampo(m.campo, oc, f, textosTipo, opcoes);
+        if (m.modo === 'fixo' && !C.vazio(m.valor)) return celulaTexto(m.valor, f, opcoes);
         return null;
       });
     });
   }
+  // Nome do arquivo de saída no mesmo formato do modelo
+  function extensaoSaida(modelo) { return modelo.tipo === 'csv' ? 'csv' : modelo.ext === 'xls' ? 'xls' : 'xlsx'; }
   function faltandoModelo(mapa) {
     var usados = {};
     mapa.forEach(function (m) { if (m.modo === 'campo') usados[m.campo] = true; });
@@ -748,7 +804,7 @@
     }
     var livro = XLSX.read(modelo.bytes, { type: 'array', cellNF: true, cellStyles: true });
     partes.forEach(function (p) { preencherFolha(XLSX, livro.Sheets[livro.SheetNames[p.abaIdx]], p.linhaCab, p.linhas); });
-    return XLSX.write(livro, { type: 'array', bookType: 'xlsx' });
+    return XLSX.write(livro, { type: 'array', bookType: modelo.ext === 'xls' ? 'biff8' : 'xlsx' });
   }
   function textoCSV(cel, sep) {
     if (cel.t === 'n') return sep === ',' ? String(cel.v) : String(cel.v.toFixed ? cel.v.toFixed(2) : cel.v).replace('.', ',');
@@ -841,7 +897,9 @@
     analisarAbaModelo: analisarAbaModelo, melhorAbaModelo: melhorAbaModelo, lerModelo: lerModelo, lerFolha: lerFolha,
     detectarFormatoData: detectarFormatoData, celulaData: celulaData, detectarFormatoValor: detectarFormatoValor, celulaValor: celulaValor,
     detectarTextosTipo: detectarTextosTipo, formatosDoModelo: formatosDoModelo, montarLinhasModelo: montarLinhasModelo, faltandoModelo: faltandoModelo,
-    temColunaTipo: temColunaTipo, abasPagarReceber: abasPagarReceber, preencherFolha: preencherFolha, gerarArquivoModelo: gerarArquivoModelo, serialDe: serialDe,
+    temColunaTipo: temColunaTipo, sinalSeparaTipos: sinalSeparaTipos, extensaoSaida: extensaoSaida, completarAnalise: completarAnalise,
+    ehModeloContaAzul: ehModeloContaAzul, limparTextoContaAzul: limparTextoContaAzul, ASSINATURA_CONTA_AZUL: ASSINATURA_CONTA_AZUL,
+    abasPagarReceber: abasPagarReceber, preencherFolha: preencherFolha, gerarArquivoModelo: gerarArquivoModelo, serialDe: serialDe,
     linhasLista: linhasLista, linhasSimples: linhasSimples, textoObs: textoObs,
     novoEstado: novoEstado, acharCliente: acharCliente, garantirCliente: garantirCliente, normalizar: normalizar,
     criarBackup: criarBackup, lerBackup: lerBackup, diasDesde: diasDesde

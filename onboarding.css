@@ -40,6 +40,8 @@ details.onb-det ul{margin:6px 0 0 18px;color:var(--medio)}
 .onb-col select,.onb-col input{border:1px solid var(--linha);border-radius:8px;padding:7px 8px;background:#fff;width:100%;min-width:0}
 .onb-col.usada{border-color:#B9D3EE;background:#F5F9FD}
 .onb-previa{margin-top:12px}
+.onb-check-linha{display:flex;align-items:center;gap:6px;font-weight:400;color:var(--texto)}
+.onb-check-linha input{width:18px;height:18px}
 .onb-previa table{font-size:13px}
 
 @media (max-width:760px){

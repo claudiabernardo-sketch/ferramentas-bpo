@@ -26,7 +26,7 @@ function digitoCNPJ(base12) {
   return d;
 }
 const CNPJ_IMOB = '11222333000181';
-const CNPJ_CONTAB = digitoCNPJ('987654320001');
+const CNPJ_CONTAB = digitoCNPJ('087654320001');
 const fmtCNPJ = O.formatarDoc;
 function digitoCPF(base9) {
   let d = base9;
@@ -143,6 +143,36 @@ XLSX.utils.book_append_sheet(livroModelo, XLSX.utils.aoa_to_sheet([['Instruçõe
 const ARQ_MODELO = 'modelo_importacao_EXEMPLO.xlsx';
 fs.writeFileSync(path.join(pasta, ARQ_MODELO), Buffer.from(XLSX.write(livroModelo, { type: 'array', bookType: 'xlsx' })));
 
+// ---------- cópia SINTÉTICA no formato do modelo do Conta Azul (.xls) ----------
+// Mesmo cabeçalho, mesmos formatos de célula e as mesmas duas abas do modelo que o Conta Azul oferece,
+// mas com exemplos e orientações escritos aqui (não é o arquivo oficial, que não vai para o repositório).
+const CAB_CA = ['Data de Competência', 'Data de Vencimento', 'Data de Pagamento', 'Valor', 'Categoria', 'Descrição', 'Cliente/Fornecedor', 'CNPJ/CPF Cliente/Fornecedor', 'Centro de Custo', 'Observações'];
+const Z_CA = ['m/d/yy', 'm/d/yy', 'm/d/yy', '#,##0.00', '@', '@', '@', '@', '@', '@'];
+const fCA = {};
+CAB_CA.forEach((t, c) => { fCA[XLSX.utils.encode_cell({ r: 0, c })] = { t: 's', v: t, z: Z_CA[c] }; });
+const EX_CA = [
+  ['2026-01-01', '2026-01-31', '2026-02-01', 1200, 'Serviços Prestados', 'Venda de exemplo 1', 'Cliente Exemplo Ltda', '01222333000105', '', 'Boleto 30 dias'],
+  ['2026-01-30', '2026-02-20', '', -900, 'Aluguel', 'Aluguel de exemplo', 'Imobiliaria Exemplo', '', 'Administrativo', ''],
+  ['2026-01-25', '2026-02-01', '2026-02-01', -150.5, 'Telefone e Internet', 'Internet de exemplo', 'Operadora Exemplo', '', 'Administrativo', ''],
+  ['2026-02-05', '2026-02-05', '2026-02-05', -80, 'Material de Escritório', 'Papel de exemplo', 'Papelaria Exemplo', '', 'Administrativo', '']
+];
+EX_CA.forEach((l, i) => l.forEach((v, c) => {
+  if (v === '') return;
+  const ref = XLSX.utils.encode_cell({ r: i + 1, c });
+  if (c <= 2) fCA[ref] = { t: 'n', v: O.serialDe(v), z: 'm/d/yy' };
+  else if (c === 3) fCA[ref] = { t: 'n', v, z: '#,##0.00' };
+  else fCA[ref] = { t: 's', v, z: '@' };
+}));
+fCA['!ref'] = 'A1:J5';
+const ORIENT_CA = ['Orientações de preenchimento (texto de exemplo, escrito para o teste):', '* Data de pagamento depois de hoje entra como em aberto.',
+  '* Não use caracteres especiais nos textos.', '* Cole só os valores para não perder a formatação.', '* Não deixe espaços sobrando.', '* Não use fórmulas.'];
+const livroCA = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(livroCA, fCA, 'Dados');
+XLSX.utils.book_append_sheet(livroCA, XLSX.utils.aoa_to_sheet(ORIENT_CA.map(t => [t])), 'Orientações');
+const ARQ_MODELO_CA = 'modelo_formato_conta_azul_SINTETICO.xls';
+fs.writeFileSync(path.join(pasta, ARQ_MODELO_CA), Buffer.from(XLSX.write(livroCA, { type: 'array', bookType: 'biff8' })));
+
+
 // ---------- confere lendo de volta, como a página faz ----------
 function lerExtrato(arquivo) {
   const abas = C.lerPlanilha(XLSX, new Uint8Array(fs.readFileSync(path.join(pasta, arquivo))), arquivo);
@@ -159,6 +189,7 @@ const linhas = [
   '',
   'Cliente fictício: Escritório Modelo. Extratos de dezembro de 2025 a novembro de 2026 (12 meses). Mínimo de meses: 3.',
   'O arquivo ' + ARQ_MODELO + ' é um modelo GENÉRICO de teste. Não é o modelo oficial do Conta Azul.',
+  'O arquivo ' + ARQ_MODELO_CA + ' é uma cópia SINTÉTICA no formato do modelo do Conta Azul (mesmo cabeçalho, formatos e abas), com exemplos inventados.',
   '',
   'Leitura dos extratos:',
   '  ' + ARQ_CORRENTE + ': ' + lidoC.movs.length + ' lançamentos (' + lidoC.ignoradas.saldo + ' linhas de saldo e ' + lidoC.ignoradas.total + ' de total ignoradas)',

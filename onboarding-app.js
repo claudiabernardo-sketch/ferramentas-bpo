@@ -427,8 +427,7 @@
       var n = mod.linhaManual;
       var cab = (aba.linhas[n] || []).map(function (v) { return String(v == null ? '' : v).trim(); });
       while (cab.length && !cab[cab.length - 1]) cab.pop();
-      var ex = aba.brutas[n + 1];
-      mod.analise = { linhaCab: n, nota: 0, cabecalho: cab, exemplo: ex && ex.some(function (c) { return c && !C.vazio(c.v); }) ? ex : null };
+      mod.analise = O.completarAnalise(aba, n, cab, 0);
     }
     mod.assinatura = O.assinatura(mod.analise.cabecalho);
     var guardado = estado.mapas[mod.assinatura];
@@ -437,9 +436,13 @@
     var colTipo = -1;
     mod.mapa.forEach(function (m, i) { if (m.modo === 'campo' && m.campo === 'tipo') colTipo = i; });
     mod.textosTipo = mod.lembrado && guardado.textosTipo ? guardado.textosTipo : O.detectarTextosTipo(mod.analise.exemplo && colTipo >= 0 ? mod.analise.exemplo[colTipo] : null);
-    mod.formatos = O.formatosDoModelo(mod.mapa, mod.analise.exemplo, mod.modelo.tipo === 'csv' ? mod.modelo.sep : null);
+    mod.formatos = O.formatosDoModelo(mod.mapa, mod.analise, mod.modelo.tipo === 'csv' ? mod.modelo.sep : null);
     mod.abasPR = O.abasPagarReceber(mod.modelo);
+    mod.contaAzul = !!mod.analise.contaAzul;
+    if (mod.limpar == null || mod.contaAzul) mod.limpar = mod.contaAzul;
+    if (!mod.competencia) mod.competencia = 'vencimento';
   }
+  function opcoesLinhas() { return { competencia: mod.competencia, limpar: !!mod.limpar, contagem: { limpos: 0 } }; }
   function guardarMapa() {
     if (!mod || !mod.assinatura) return;
     estado.mapas[mod.assinatura] = { colunas: JSON.parse(JSON.stringify(mod.mapa)), textosTipo: mod.textosTipo };
@@ -473,13 +476,30 @@
       alvo.appendChild(caixa); return;
     }
     var infos = [];
+    if (mod.contaAzul) {
+      infos.push('Reconheci o modelo de importação do Conta Azul pelos títulos das colunas. O arquivo sai no mesmo formato (' + O.extensaoSaida(modelo) + '), com as mesmas abas, o mesmo cabeçalho e as linhas de exemplo do Conta Azul apagadas.');
+      infos.push('Contas a pagar saem com valor negativo e contas a receber com valor positivo, no mesmo arquivo. A Data de Pagamento fica vazia: são contas futuras, em aberto.');
+    }
     infos.push('Aba "' + modelo.abas[mod.abaIdx].nome + '", títulos na linha ' + (an.linhaCab + 1) + (an.linhaCab ? ': as ' + plural(an.linhaCab, 'linha', 'linhas') + ' de cima ficam como estão' : '') + '.');
-    if (an.exemplo) infos.push('O modelo tem uma linha de exemplo logo abaixo dos títulos: copiei dela o formato da data e do valor, e ela é trocada pelos lançamentos.');
+    if (an.exemplo) infos.push('O modelo tem ' + plural(an.exemplos.length, 'linha', 'linhas') + ' de exemplo abaixo dos títulos: copiei delas o formato da data e do valor, e elas são apagadas e trocadas pelos lançamentos.');
     else infos.push('Sem linha de exemplo: as datas saem como dd/mm/aaaa e o valor como número.');
     if (mod.lembrado) infos.push('Já vi este modelo antes: usei o mesmo mapeamento da última vez.');
     caixa.appendChild(el('div', { class: 'nota info' }, [el('ul', {}, infos.map(function (t) { return el('li', { texto: t }); }))]));
     caixa.appendChild(el('p', { class: 'onb-dica', texto: 'Para cada coluna do modelo, diga o que vai nela. "Valor fixo" repete o mesmo texto em todas as linhas (por exemplo a forma de pagamento ou a conta).' }));
     caixa.appendChild(mapaModelo());
+    var extras = el('div', { class: 'linha-campos', style: 'margin-top:10px' });
+    if (mod.mapa.some(function (m) { return m.modo === 'campo' && m.campo === 'competencia'; })) {
+      var selComp = el('select', {}, [el('option', { value: 'vencimento', texto: 'Igual à data de vencimento' }), el('option', { value: 'dia1', texto: 'Dia 1 do mês do vencimento' })]);
+      selComp.value = mod.competencia;
+      selComp.addEventListener('change', function () { mod.competencia = selComp.value; renderGerar(); });
+      extras.appendChild(el('label', { class: 'campo' }, [el('span', { texto: 'Data de competência' }), selComp]));
+    }
+    var ckLimpar = el('input', { type: 'checkbox' });
+    ckLimpar.checked = !!mod.limpar;
+    ckLimpar.disabled = mod.contaAzul;
+    ckLimpar.addEventListener('change', function () { mod.limpar = ckLimpar.checked; renderGerar(); });
+    extras.appendChild(el('label', { class: 'campo onb-check' }, [el('span', { texto: 'Caracteres especiais' }), el('span', { class: 'onb-check-linha' }, [ckLimpar, mod.contaAzul ? ' Tirar sempre (exigência do Conta Azul)' : ' Tirar caracteres especiais dos textos']) ]));
+    caixa.appendChild(extras);
     if (O.temColunaTipo(mod.mapa)) {
       var tp = el('div', { class: 'linha-campos', style: 'margin-top:10px' });
       ['pagar', 'receber'].forEach(function (k) {
@@ -514,7 +534,7 @@
         else mod.mapa[i] = { modo: 'campo', campo: v.slice(6) };
         fixo.hidden = v !== 'fixo';
         bloco.classList.toggle('usada', v !== 'branco');
-        mod.formatos = O.formatosDoModelo(mod.mapa, mod.analise.exemplo, mod.modelo.tipo === 'csv' ? mod.modelo.sep : null);
+        mod.formatos = O.formatosDoModelo(mod.mapa, mod.analise, mod.modelo.tipo === 'csv' ? mod.modelo.sep : null);
         guardarMapa();
         if (v === 'campo:tipo' || mod.mapa.length) renderGerar();
         if (v === 'fixo') fixo.focus();
@@ -531,6 +551,7 @@
     var ops = [];
     if (mod && mod.abasPR) ops.push(['abas', 'Pagar e receber nas abas do modelo']);
     if (mod && O.temColunaTipo(mod.mapa)) ops.push(['juntos', 'Pagar e receber no mesmo arquivo']);
+    else if (mod && O.sinalSeparaTipos(mod.mapa, mod.formatos)) ops.push(['juntos', 'Pagar e receber no mesmo arquivo (pelo sinal do valor)']);
     ops.push(['separados', 'Pagar e receber em dois arquivos'], ['pagar', 'Só contas a pagar'], ['receber', 'Só contas a receber']);
     return ops;
   }
@@ -574,6 +595,12 @@
     var p = oc.filter(function (o) { return o.item.tipo === 'pagar'; }).length, r = oc.length - p;
     var ultimo = oc.length ? oc[oc.length - 1].vencimento : null;
     alvo.appendChild(el('div', { class: 'nota ok', texto: 'Vai gerar ' + plural(oc.length, 'linha', 'linhas') + ' (' + plural(p, 'conta a pagar', 'contas a pagar') + ' e ' + plural(r, 'conta a receber', 'contas a receber') + ')' + (oc.length ? ', de ' + C.dataBR(oc[0].vencimento) + ' a ' + C.dataBR(ultimo) : '') + '.' }));
+    if (mod && mod.analise.linhaCab >= 0 && !O.faltandoModelo(mod.mapa).length) {
+      var op = opcoesLinhas();
+      O.montarLinhasModelo(oc, mod.mapa, mod.formatos, mod.textosTipo, op);
+      if (op.contagem.limpos) alvo.appendChild(el('div', { class: 'nota info', texto: plural(op.contagem.limpos, 'texto foi limpo', 'textos foram limpos') + ' (tirei caracteres especiais ou espaços sobrando' + (mod.contaAzul ? ', como o Conta Azul pede' : '') + ').' }));
+      if (mod.contaAzul) alvo.appendChild(el('div', { class: 'nota atencao', texto: 'A Categoria precisa ter exatamente o mesmo nome do plano de categorias do Conta Azul do cliente, senão a importação recusa ou cria outra. Confira na tabela do passo 2 antes de baixar.' }));
+    }
     if (!oc.length) return;
     var corpo = el('tbody', {}, oc.slice(0, 8).map(function (o) {
       return el('tr', {}, [el('td', { texto: C.dataBR(o.vencimento) }), el('td', { texto: o.item.tipo === 'pagar' ? 'Pagar' : 'Receber' }), el('td', { texto: o.item.nome }),
@@ -589,21 +616,21 @@
   }
   function baixarGerado(nome, conteudo) {
     if (typeof conteudo === 'string') U.baixar(nome, conteudo, 'text/csv;charset=utf-8');
-    else U.baixar(nome, new Blob([conteudo], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+    else U.baixar(nome, new Blob([conteudo], { type: /[.]xls$/i.test(nome) ? 'application/vnd.ms-excel' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
   }
   $('btn-gerar').addEventListener('click', function () {
     if ($('btn-gerar').disabled || !mod) return;
     guardarMapa();
-    var modo = $('gerar-tipos').value, X = window.XLSX, an = mod.analise, ext = mod.modelo.tipo === 'csv' ? '.csv' : '.xlsx';
+    var modo = $('gerar-tipos').value, X = window.XLSX, an = mod.analise, ext = '.' + O.extensaoSaida(mod.modelo);
     var mi = $('mes-inicial').value || O.mesQueVem(hoje());
-    function linhasDe(tipos, mapa, formatos) { return O.montarLinhasModelo(ocorrencias(tipos), mapa, formatos, mod.textosTipo); }
+    function linhasDe(tipos, mapa, formatos) { return O.montarLinhasModelo(ocorrencias(tipos), mapa, formatos, mod.textosTipo, opcoesLinhas()); }
     try {
       if (modo === 'abas' && mod.abasPR) {
         var partes = ['pagar', 'receber'].map(function (t) {
           var idx = mod.abasPR[t], a = idx === mod.abaIdx ? an : O.analisarAbaModelo(mod.modelo.abas[idx]);
           var mesma = O.assinatura(a.cabecalho) === mod.assinatura;
           var mapa = mesma ? mod.mapa : O.detectarMapaModelo(a.cabecalho);
-          return { abaIdx: idx, linhaCab: a.linhaCab, linhas: linhasDe([t], mapa, O.formatosDoModelo(mapa, a.exemplo, null)) };
+          return { abaIdx: idx, linhaCab: a.linhaCab, linhas: linhasDe([t], mapa, O.formatosDoModelo(mapa, a, null)) };
         });
         baixarGerado(nomeBase() + '-' + mi + ext, O.gerarArquivoModelo(X, mod.modelo, partes));
       } else if (modo === 'juntos') {
@@ -621,7 +648,6 @@
         if (!feitos) { U.avisar('Não tem nenhuma conta desse tipo marcada.', 'erro'); return; }
         if (feitos > 1) U.avisar('Baixei dois arquivos: contas a pagar e contas a receber. Se o navegador perguntar, permita baixar os dois.', 'ok');
       }
-      if (mod.modelo.nomeArquivo && /\.xls$/i.test(mod.modelo.nomeArquivo)) U.avisar('O modelo era .xls: a planilha preenchida saiu em .xlsx.', 'ok');
     } catch (e) {
       U.avisar('Não consegui montar a planilha: ' + e.message, 'erro');
     }

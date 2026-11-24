@@ -220,6 +220,63 @@ const mapaCsv = O.detectarMapaModelo(acsv.cabecalho);
 const txtCsv = O.gerarArquivoModelo(XLSX, mcsv, [{ abaIdx: 0, linhaCab: acsv.linhaCab, linhas: O.montarLinhasModelo(ocParc, mapaCsv, O.formatosDoModelo(mapaCsv, null, ';')) }]);
 igual(txtCsv.replace('﻿', '').split('\r\n').slice(0, 3), ['Instrução: não apague esta linha', 'Vencimento;Descrição;Valor;Fornecedor', '10/12/2026;IPTU;420,00;IPTU'], 'csv: linha de cima preservada e valor com vírgula');
 
+// ---------- modelo no formato do Conta Azul (cópia sintética .xls) ----------
+igual(O.limparTextoContaAzul("  =Tel. Fixo + Internet (09/2020) - Nº 5: 'x';  "), 'Tel. Fixo Internet 09/2020 N 5 x', 'limpa caracteres proibidos e espaços');
+igual(O.limparTextoContaAzul('Ana-Maria_Silva'), 'Ana Maria Silva', 'hífen e sublinhado viram espaço');
+igual(O.limparTextoContaAzul('Serviços Prestados'), 'Serviços Prestados', 'acento é permitido');
+const bytesCA = new Uint8Array(fs.readFileSync(path.join(pasta, 'modelo_formato_conta_azul_SINTETICO.xls')));
+const mCA = O.lerModelo(XLSX, bytesCA, 'Planilha_Modelo_ContaAzul .xls');
+igual(mCA.ext, 'xls', 'modelo .xls reconhecido');
+igual(O.extensaoSaida(mCA), 'xls', 'saída no mesmo formato (.xls)');
+const idxCA = O.melhorAbaModelo(mCA);
+igual(mCA.abas[idxCA].nome, 'Dados', 'aba Dados escolhida');
+const anCA = O.analisarAbaModelo(mCA.abas[idxCA]);
+igual([anCA.contaAzul, anCA.linhaCab, anCA.exemplos.length], [true, 0, 4], 'reconhece o modelo do Conta Azul pelo cabeçalho, com 4 exemplos');
+const mapaCA = O.detectarMapaModelo(anCA.cabecalho);
+igual(mapaCA.map(m => m.modo === 'campo' ? m.campo : '-'), ['competencia', 'vencimento', '-', 'valor', 'categoria', 'descricao', 'contato', 'documento', '-', '-'], 'mapeamento do Conta Azul (pagamento, centro de custo e observações vazios)');
+const fCA = O.formatosDoModelo(mapaCA, anCA, null);
+igual(fCA[1], { tipo: 'serial', z: 'm/d/yy' }, 'data como data do Excel m/d/yy');
+igual(fCA[3].negativoPagar, true, 'exemplos negativos: pagar sai negativo');
+igual(O.sinalSeparaTipos(mapaCA, fCA), true, 'pagar e receber no mesmo arquivo pelo sinal');
+igual(fCA[7], { tipo: 'doc', z: '@', soDigitos: true }, 'CNPJ só dígitos, como texto');
+function gerarCA(opc) {
+  const cont = { limpos: 0 };
+  const linhasCA = O.montarLinhasModelo(ocEx, mapaCA, fCA, null, Object.assign({ limpar: true, contagem: cont }, opc));
+  const out = O.gerarArquivoModelo(XLSX, mCA, [{ abaIdx: idxCA, linhaCab: anCA.linhaCab, linhas: linhasCA }]);
+  return { livro: XLSX.read(out, { type: 'array', cellNF: true }), cont };
+}
+const gCA = gerarCA({});
+const vCA = gCA.livro, dCA = vCA.Sheets.Dados;
+igual(vCA.SheetNames, ['Dados', 'Orientações'], 'mesmas abas, mesma ordem');
+const orig = XLSX.read(bytesCA, { type: 'array' });
+igual(XLSX.utils.sheet_to_json(vCA.Sheets['Orientações'], { header: 1 }), XLSX.utils.sheet_to_json(orig.Sheets['Orientações'], { header: 1 }), 'aba Orientações intacta');
+const cabOut = [], cabOrig = [];
+for (let c = 0; c < 10; c++) { const a = dCA[XLSX.utils.encode_cell({ r: 0, c })], b = orig.Sheets.Dados[XLSX.utils.encode_cell({ r: 0, c })]; cabOut.push([a.v, a.t]); cabOrig.push([b.v, b.t]); }
+igual(cabOut, cabOrig, 'cabeçalho idêntico');
+igual(dCA['!ref'], 'A1:J' + (1 + ocEx.length), 'só cabeçalho e as ' + ocEx.length + ' linhas novas');
+const todas = XLSX.utils.sheet_to_json(dCA, { header: 1, raw: true, defval: '' }).slice(1);
+verdade(todas.every(l => !/exemplo/i.test(l.join(' '))), 'nenhuma linha de exemplo sobrou');
+const celCA = (r, c) => dCA[XLSX.utils.encode_cell({ r, c })];
+verdade(todas.every((l, i) => { const a = celCA(i + 1, 0), b = celCA(i + 1, 1); return a.t === 'n' && a.z === 'm/d/yy' && b.t === 'n' && b.z === 'm/d/yy' && a.v === b.v; }), 'competência e vencimento como data m/d/yy e iguais');
+verdade(todas.every((l, i) => !celCA(i + 1, 2) && !celCA(i + 1, 8) && !celCA(i + 1, 9)), 'pagamento, centro de custo e observações vazios');
+const pc = XLSX.SSF.parse_date_code(celCA(1, 1).v);
+igual([pc.y, pc.m, pc.d], [2026, 12, 1], 'primeira data no dia certo (sem fuso)');
+igual(ocEx[0].vencimento, '2026-12-01', 'primeira ocorrência é 01/12/2026');
+verdade(todas.every((l, i) => { const v = celCA(i + 1, 3); return v.t === 'n' && v.z === '#,##0.00' && (ocEx[i].item.tipo === 'pagar' ? v.v < 0 : v.v > 0); }), 'valor número #,##0.00: negativo pagar, positivo receber');
+verdade(todas.every((l, i) => [4, 5, 6].every(c => { const x = celCA(i + 1, c); return x && x.t === 's' && x.z === '@'; })), 'categoria, descrição e fornecedor como texto @');
+verdade(todas.every(l => [4, 5, 6, 7].every(c => !/['"!@#%¨&*()ªº§+_\-?°\[\]{}:;]/.test(String(l[c])) && String(l[c]) === String(l[c]).trim() && !/\s{2}/.test(l[c]) && !/^=/.test(l[c]))), 'textos sem caracteres proibidos, espaços sobrando ou fórmula');
+const iContab = ocEx.findIndex(o => o.item.chave === 'CONTABILIDADE EXATA');
+const hContab = celCA(iContab + 1, 7);
+igual([hContab.t, hContab.z, hContab.v.charAt(0), hContab.v.length], ['s', '@', '0', 14], 'CNPJ como texto com zero à esquerda');
+igual(celCA(ocEx.findIndex(o => o.item.chave === 'VIVO FIBRA') + 1, 7), undefined, 'sem CNPJ válido, a coluna fica vazia');
+igual(gCA.cont.limpos, 0, 'textos do exemplo já estavam limpos');
+const contL = { limpos: 0 }, ocSujo = [Object.assign({}, ocEx[0], { item: Object.assign({}, ocEx[0].item, { nome: 'Ana-Maria (Freela)', descricao: '=Serviço: design' }) })];
+const lSujo = O.montarLinhasModelo(ocSujo, mapaCA, fCA, null, { limpar: true, contagem: contL });
+igual([lSujo[0][6].v, lSujo[0][5].v, contL.limpos], ['Ana Maria Freela', 'Serviço design', 2], 'limpa e conta os textos limpos');
+const g1 = gerarCA({ competencia: 'dia1' });
+const c1 = XLSX.SSF.parse_date_code(g1.livro.Sheets.Dados.A3.v), v1 = XLSX.SSF.parse_date_code(g1.livro.Sheets.Dados.B3.v);
+igual([c1.d, c1.m, v1.m], [1, v1.m, v1.m], 'opção competência no dia 1 do mês');
+
 // ---------- backup ----------
 const est = O.novoEstado();
 const cli = O.garantirCliente(est, 'Escritório Modelo');

@@ -57,7 +57,9 @@
         'numero do documento', 'documento', 'num documento', 'nosso numero', 'contrato', 'n contrato', 'numero', 'n', 'codigo'] ,
       evitar: ['cpf', 'cnpj'] },
     { chave: 'parcela', rotulo: 'Parcela',
-      sinonimos: ['parcela', 'n parcela', 'n da parcela', 'numero da parcela', 'parc', 'parcelas'] },
+      sinonimos: ['parcela', 'n parcela', 'n da parcela', 'numero da parcela', 'parc', 'parcelas'],
+      // "Valor original da parcela (R$)" do Conta Azul é dinheiro, não o número da parcela
+      evitar: ['valor', 'r$', 'juros', 'multa', 'desconto', 'pago', 'recebido', 'aberto', 'total'] },
     { chave: 'cpf', rotulo: 'CPF/CNPJ do cliente',
       sinonimos: ['cpf/cnpj', 'cpf cnpj', 'cnpj/cpf', 'cpf', 'cnpj', 'documento do cliente', 'cpf do cliente', 'cnpj do cliente', 'inscricao'] }
   ];
