@@ -1,0 +1,29 @@
+Painel da coordenação: números esperados na data de referência 24/11/2026
+
+Padaria Pão Quente (Ana Souza)
+  a pagar vencido: 2 títulos, R$ 1.550,50, mais antigo há 10 dias
+  a receber vencido: 1 títulos, R$ 480,00, mais antigo há 4 dias
+  vencem nos próximos 7 dias: 3 (R$ 2.450,00 a pagar, R$ 1.250,75 a receber)
+Ótica Visão Clara (Ana Souza)
+  a pagar vencido: 1 títulos, R$ 2.450,00, mais antigo há 1 dias
+  a receber vencido: 2 títulos, R$ 1.470,00, mais antigo há 8 dias
+  vencem nos próximos 7 dias: 2 (R$ 1.890,30 a pagar, R$ 410,00 a receber)
+Studio Pilates Leve (Bruna Lima)
+  a pagar vencido: 0 títulos, R$ 0,00
+  a receber vencido: 0 títulos, R$ 0,00
+  vencem nos próximos 7 dias: 3 (R$ 650,00 a pagar, R$ 760,00 a receber)
+Mercadinho Bom Preço (Bruna Lima)
+  a pagar vencido: 2 títulos, R$ 3.410,00, mais antigo há 40 dias
+  a receber vencido: 2 títulos, R$ 239,90, mais antigo há 45 dias
+  vencem nos próximos 7 dias: 2 (R$ 1.500,00 a pagar, R$ 260,00 a receber)
+Clínica Sorriso (Carla Mendes)
+  a pagar vencido: 1 títulos, R$ 980,00, mais antigo há 3 dias
+  a receber vencido: 1 títulos, R$ 600,00, mais antigo há 12 dias
+  vencem nos próximos 7 dias: 3 (R$ 4.200,00 a pagar, R$ 2.050,00 a receber)
+Pet Shop Amigo Fiel (Carla Mendes)
+  a pagar vencido: 1 títulos, R$ 540,00, mais antigo há 6 dias
+  a receber vencido: 1 títulos, R$ 95,00, mais antigo há 1 dias
+  vencem nos próximos 7 dias: 2 (R$ 300,00 a pagar, R$ 180,00 a receber)
+
+Total: 7 a pagar vencidos (R$ 8.930,50), 7 a receber vencidos (R$ 2.884,90), 15 vencem em 7 dias.
+Extrato da Clínica Sorriso: 3 lançamentos pendentes de conciliação.

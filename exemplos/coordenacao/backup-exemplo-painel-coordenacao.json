@@ -1,0 +1,400 @@
+{
+  "ferramenta": "painel-da-coordenacao",
+  "versao": 1,
+  "salvoEm": "2026-11-24T12:00:00.000Z",
+  "dados": {
+    "versao": 1,
+    "assistentes": [
+      {
+        "id": "a1",
+        "nome": "Ana Souza"
+      },
+      {
+        "id": "a2",
+        "nome": "Bruna Lima"
+      },
+      {
+        "id": "a3",
+        "nome": "Carla Mendes"
+      }
+    ],
+    "empresas": [
+      {
+        "id": "e1",
+        "nome": "Padaria Pão Quente",
+        "assistenteId": "a1",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "contas-a-pagar-padaria-pao-quente.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-14",
+                "valor": 1200,
+                "contato": "Moinho Trigo Bom",
+                "desc": "Farinha de trigo"
+              },
+              {
+                "venc": "2026-11-22",
+                "valor": 350.5,
+                "contato": "Energia Luz Forte",
+                "desc": "Conta de luz"
+              },
+              {
+                "venc": "2026-11-24",
+                "valor": 150,
+                "contato": "Água Limpa",
+                "desc": "Conta de água"
+              },
+              {
+                "venc": "2026-11-27",
+                "valor": 2300,
+                "contato": "Laticínios Serra",
+                "desc": "Leite e queijo"
+              },
+              {
+                "venc": "2026-12-06",
+                "valor": 900,
+                "contato": "Imobiliária Centro",
+                "desc": "Aluguel"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "contas-a-receber-padaria-pao-quente.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-20",
+                "valor": 480,
+                "contato": "Hotel Central",
+                "desc": "Pães para o café"
+              },
+              {
+                "venc": "2026-11-29",
+                "valor": 1250.75,
+                "contato": "Hotel Central",
+                "desc": "Fornecimento semanal"
+              },
+              {
+                "venc": "2026-12-09",
+                "valor": 600,
+                "contato": "Escola Aprender",
+                "desc": "Lanches"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": 4,
+          "ultima": "2026-11-21",
+          "origem": "manual",
+          "arquivo": null,
+          "atualizadoEm": null
+        }
+      },
+      {
+        "id": "e2",
+        "nome": "Ótica Visão Clara",
+        "assistenteId": "a1",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "otica-visao-clara-contas-a-pagar.csv",
+            "titulos": [
+              {
+                "venc": "2026-11-23",
+                "valor": 2450,
+                "contato": "Lentes Brasil",
+                "desc": "Lentes"
+              },
+              {
+                "venc": "2026-11-26",
+                "valor": 1890.3,
+                "contato": "Armações Prime",
+                "desc": "Armações"
+              },
+              {
+                "venc": "2026-12-14",
+                "valor": 1000,
+                "contato": "Contabilidade Exata",
+                "desc": "Honorários"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "otica-visao-clara-contas-a-receber.csv",
+            "titulos": [
+              {
+                "venc": "2026-11-16",
+                "valor": 320,
+                "contato": "Maria Silva",
+                "desc": "Óculos, parcela 2"
+              },
+              {
+                "venc": "2026-11-21",
+                "valor": 1150,
+                "contato": "João Pereira",
+                "desc": "Óculos de grau"
+              },
+              {
+                "venc": "2026-11-25",
+                "valor": 410,
+                "contato": "Carla Dias",
+                "desc": "Parcela 1"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": 0,
+          "ultima": "2026-11-23",
+          "origem": "manual",
+          "arquivo": null,
+          "atualizadoEm": null
+        }
+      },
+      {
+        "id": "e3",
+        "nome": "Studio Pilates Leve",
+        "assistenteId": "a2",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "Studio Pilates Leve - Contas a Pagar.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-28",
+                "valor": 650,
+                "contato": "Imobiliária Centro",
+                "desc": "Aluguel da sala"
+              },
+              {
+                "venc": "2026-12-04",
+                "valor": 120,
+                "contato": "Internet Rápida",
+                "desc": "Internet"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "Studio Pilates Leve - Contas a Receber.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-26",
+                "valor": 380,
+                "contato": "Aluna Paula",
+                "desc": "Mensalidade"
+              },
+              {
+                "venc": "2026-11-30",
+                "valor": 380,
+                "contato": "Aluna Renata",
+                "desc": "Mensalidade"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": 0,
+          "ultima": "2026-11-24",
+          "origem": "manual",
+          "arquivo": null,
+          "atualizadoEm": null
+        }
+      },
+      {
+        "id": "e4",
+        "nome": "Mercadinho Bom Preço",
+        "assistenteId": "a2",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "mercadinho-bom-preco-pagar.csv",
+            "titulos": [
+              {
+                "venc": "2026-10-15",
+                "valor": 3200,
+                "contato": "Distribuidora Norte",
+                "desc": "Mercadorias"
+              },
+              {
+                "venc": "2026-11-23",
+                "valor": 210,
+                "contato": "Gás Fácil",
+                "desc": "Gás"
+              },
+              {
+                "venc": "2026-12-01",
+                "valor": 1500,
+                "contato": "Atacado Bom",
+                "desc": "Bebidas"
+              },
+              {
+                "venc": "2026-12-02",
+                "valor": 400,
+                "contato": "Limpeza Total",
+                "desc": "Produtos de limpeza"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-14",
+            "arquivo": "mercadinho-bom-preco-receber-em-aberto.csv",
+            "titulos": [
+              {
+                "venc": "2026-10-10",
+                "valor": 150,
+                "contato": "Condomínio Flores",
+                "desc": "Fiado do mês"
+              },
+              {
+                "venc": "2026-11-22",
+                "valor": 89.9,
+                "contato": "Bar do Zé",
+                "desc": "Compra a prazo"
+              },
+              {
+                "venc": "2026-11-27",
+                "valor": 260,
+                "contato": "Restaurante Bom",
+                "desc": "Compra a prazo"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": 12,
+          "ultima": "2026-11-10",
+          "origem": "manual",
+          "arquivo": null,
+          "atualizadoEm": null
+        }
+      },
+      {
+        "id": "e5",
+        "nome": "Clínica Sorriso",
+        "assistenteId": "a3",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "clinica-sorriso-contas-a-pagar.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-21",
+                "valor": 980,
+                "contato": "Dental Supply",
+                "desc": "Materiais"
+              },
+              {
+                "venc": "2026-11-25",
+                "valor": 4200,
+                "contato": "Equipe",
+                "desc": "Salários"
+              },
+              {
+                "venc": "2026-12-19",
+                "valor": 350,
+                "contato": "Lavanderia Limpa",
+                "desc": "Jalecos"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "clinica-sorriso-contas-a-receber.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-12",
+                "valor": 600,
+                "contato": "Convênio Saúde Mais",
+                "desc": "Repasse"
+              },
+              {
+                "venc": "2026-11-24",
+                "valor": 250,
+                "contato": "Paciente Lucas",
+                "desc": "Clareamento"
+              },
+              {
+                "venc": "2026-11-28",
+                "valor": 1800,
+                "contato": "Convênio Odonto Já",
+                "desc": "Repasse"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": 3,
+          "ultima": "2026-11-19",
+          "origem": "arquivo",
+          "arquivo": "clinica-sorriso-extrato-conciliacao.xlsx",
+          "atualizadoEm": "2026-11-24"
+        }
+      },
+      {
+        "id": "e6",
+        "nome": "Pet Shop Amigo Fiel",
+        "assistenteId": "a3",
+        "cargas": {
+          "pagar": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "pet-shop-amigo-fiel-contas-novembro.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-18",
+                "valor": 540,
+                "contato": "Ração Total",
+                "desc": "Ração"
+              },
+              {
+                "venc": "2026-11-26",
+                "valor": 300,
+                "contato": "Pet Distribuidora",
+                "desc": "Acessórios"
+              }
+            ]
+          },
+          "receber": {
+            "atualizadoEm": "2026-11-24",
+            "arquivo": "pet-shop-amigo-fiel-contas-novembro.xlsx",
+            "titulos": [
+              {
+                "venc": "2026-11-23",
+                "valor": 95,
+                "contato": "Cliente Rex",
+                "desc": "Banho e tosa"
+              },
+              {
+                "venc": "2026-11-29",
+                "valor": 180,
+                "contato": "Cliente Mel",
+                "desc": "Consulta"
+              }
+            ]
+          }
+        },
+        "conc": {
+          "pendentes": null,
+          "ultima": null,
+          "origem": null,
+          "arquivo": null,
+          "atualizadoEm": null
+        }
+      }
+    ],
+    "regras": {
+      "urgPagarDias": 3,
+      "urgReceberDias": 30,
+      "urgConcDias": 7,
+      "urgPendencias": 50,
+      "atConcDias": 3,
+      "atPendencias": 0,
+      "atAtualizacaoDias": 7
+    },
+    "ultimoBackup": null
+  }
+}

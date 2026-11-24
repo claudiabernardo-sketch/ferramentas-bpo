@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da coordenação | Ferramentas do BPO</title>
+<meta name="description" content="Painel para a coordenação do BPO: as empresas de cada assistente, contas a pagar e a receber vencidas, o que vence na semana e as conciliações pendentes.">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="coordenacao.css">
+</head>
+<body>
+<header class="barra"><div class="barra-dentro">
+  <a class="marca" href="index.html"><span class="logo">B</span><span><b>Ferramentas do BPO</b><small>Cláudia Bernardo</small></span></a>
+  <nav class="abas-ferramentas" aria-label="Ferramentas">
+    <a href="index.html">Início</a>
+    <a href="dre.html">DRE e painel</a>
+    <a href="volume.html">Monitor de volume</a>
+    <a href="margem.html">Vendas e margem</a>
+    <a href="onboarding.html">Recorrentes</a>
+    <a href="coordenacao.html" class="ativo">Coordenação</a>
+    <a href="conciliar.html">Conciliação</a>
+  </nav>
+</div></header>
+
+<main class="pagina">
+  <h1>Painel da coordenação</h1>
+  <p class="sub">As empresas que cada assistente atende e, para cada uma, as contas a pagar e a receber vencidas, o que vence nos próximos 7 dias e como está a conciliação. Para a coordenação ver, numa tela só, quem está em dia e quem precisa de ajuda.</p>
+
+  <div id="avisos-topo"></div>
+
+  <div class="botoes co-topo nao-imprimir">
+    <button type="button" class="btn" id="btn-backup">Salvar backup</button>
+    <button type="button" class="btn" id="btn-restaurar">Restaurar backup</button>
+    <button type="button" class="btn" id="btn-excel">Baixar em Excel</button>
+    <button type="button" class="btn" id="btn-imprimir">Imprimir ou salvar em PDF</button>
+  </div>
+
+  <section class="passo nao-imprimir" id="passo-equipe">
+    <div class="passo-titulo"><span class="passo-num">1</span><h2>Equipe e carteira</h2></div>
+    <p class="co-dica">Cadastre as assistentes e as empresas (pelo apelido que a equipe usa), cada uma com a assistente responsável. Já tem isso numa planilha? Traga a planilha com as colunas Empresa e Assistente.</p>
+    <div class="duas co-duas">
+      <form id="form-assistente" class="co-form" autocomplete="off">
+        <h3>Nova assistente</h3>
+        <div class="linha-campos">
+          <label class="campo"><span>Nome</span><input id="nova-assistente" maxlength="80" placeholder="Ex.: Ana Souza"></label>
+          <div class="campo co-campo-botao"><button type="submit" class="btn btn-forte">Adicionar assistente</button></div>
+        </div>
+      </form>
+      <form id="form-empresa" class="co-form" autocomplete="off">
+        <h3>Nova empresa</h3>
+        <div class="linha-campos">
+          <label class="campo"><span>Apelido da empresa</span><input id="nova-empresa" maxlength="80" placeholder="Ex.: Padaria Pão Quente"></label>
+          <label class="campo"><span>Assistente responsável</span><select id="nova-empresa-assistente"></select></label>
+          <div class="campo co-campo-botao"><button type="submit" class="btn btn-forte">Adicionar empresa</button></div>
+        </div>
+      </form>
+    </div>
+    <details class="co-bloco" id="bloco-importar">
+      <summary>Importar a carteira de uma planilha</summary>
+      <p class="co-dica">A planilha precisa de uma coluna com o nome da empresa e, se quiser, outra com a assistente. Empresa que já existe só troca de responsável; assistente nova é cadastrada.</p>
+      <div id="area-carteira"></div>
+      <div id="carteira-pendente"></div>
+    </details>
+    <details class="co-bloco" id="bloco-carteira">
+      <summary id="resumo-carteira">Ver e editar a equipe e a carteira</summary>
+      <div id="lista-equipe"></div>
+    </details>
+  </section>
+
+  <section class="passo nao-imprimir" id="passo-arquivos">
+    <div class="passo-titulo"><span class="passo-num">2</span><h2>Atualize a semana</h2></div>
+    <p class="co-dica">Exporte do sistema (Conta Azul, Nibo, Omie ou a sua planilha) o relatório de <b>contas a pagar</b> e o de <b>contas a receber</b> de cada empresa, em Excel ou CSV. Pode soltar vários arquivos de uma vez: eu tento reconhecer a empresa pelo nome do arquivo, e você confere antes de guardar. Guardo só os títulos em aberto. O relatório novo substitui o anterior da mesma empresa.</p>
+    <p class="co-dica">Tem um extrato com a coluna de conciliação (Conciliado, Não conciliado, Pendente)? Pode soltar aqui também: eu conto os pendentes.</p>
+    <div id="sem-empresa" class="nota atencao" hidden>Cadastre as empresas no passo 1 antes de trazer os relatórios.</div>
+    <div id="area-arquivos" class="co-area"></div>
+    <div id="pendentes"></div>
+    <div class="botoes co-guardar" id="guardar-bloco" hidden>
+      <button type="button" class="btn btn-forte" id="btn-guardar">Guardar os relatórios</button>
+      <button type="button" class="btn" id="btn-limpar">Descartar arquivos</button>
+      <span id="guardar-motivo" class="co-motivo"></span>
+    </div>
+  </section>
+
+  <section class="passo" id="passo-painel">
+    <div class="passo-titulo"><span class="passo-num">3</span><h2>Painel</h2></div>
+    <div class="co-ref">
+      <label class="campo"><span>Data de referência</span><input id="data-ref" type="date"></label>
+      <button type="button" class="btn nao-imprimir" id="btn-hoje">Voltar para hoje</button>
+      <p class="co-dica" id="texto-ref"></p>
+    </div>
+    <details class="co-bloco nao-imprimir" id="bloco-regras">
+      <summary>Regras dos selos Em dia, Atenção e Urgente</summary>
+      <p class="co-dica">Ajuste do jeito da sua operação. Deixe o campo vazio para desligar a regra.</p>
+      <h3>Urgente quando</h3>
+      <div class="linha-campos co-regras">
+        <label class="campo"><span>Conta a pagar vencida há mais de (dias)</span><input id="r-urgPagarDias" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Conta a receber vencida há mais de (dias)</span><input id="r-urgReceberDias" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Conciliação parada há mais de (dias)</span><input id="r-urgConcDias" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Lançamentos pendentes de conciliação acima de</span><input id="r-urgPendencias" type="number" min="0" step="1" inputmode="numeric"></label>
+      </div>
+      <h3>Atenção quando</h3>
+      <div class="linha-campos co-regras">
+        <label class="campo"><span>Conciliação parada há mais de (dias)</span><input id="r-atConcDias" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Lançamentos pendentes de conciliação acima de</span><input id="r-atPendencias" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Relatórios sem atualizar há mais de (dias)</span><input id="r-atAtualizacaoDias" type="number" min="0" step="1" inputmode="numeric"></label>
+      </div>
+      <p class="co-dica">Também fica em Atenção: qualquer conta vencida que não chegou no limite de Urgente, empresa ainda sem relatório e empresa sem a data da última conciliação.</p>
+      <div class="botoes"><button type="button" class="btn" id="btn-regras-padrao">Voltar às regras de exemplo</button></div>
+    </details>
+    <div id="painel"></div>
+  </section>
+
+  <section class="passo" id="detalhe" hidden></section>
+
+  <div class="nota info co-nota-final">Tudo fica só neste navegador, neste computador. Nada é enviado para a internet. Para a equipe toda ver o painel, a coordenação usa este computador ou passa o arquivo de <b>Salvar backup</b> para a outra pessoa, que abre esta página e usa <b>Restaurar backup</b>.</div>
+  <p class="rodape">Seus dados ficam só neste navegador. Nada é enviado para a internet.</p>
+</main>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="comum.js"></script>
+<script src="ui.js"></script>
+<script src="coordenacao-logica.js"></script>
+<script src="coordenacao-app.js"></script>
+</body>
+</html>

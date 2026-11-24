@@ -1,0 +1,21 @@
+Conciliação inteligente: resultados esperados com os arquivos de exemplo
+Empresa: Escritório Modelo Advocacia (fictícia). Opções padrão: tolerância R$ 0,05, janela de 10 dias antes a 45 depois.
+Traga o extrato (Excel ou OFX), as contas a receber e restaure o backup (ou importe a planilha de pagadores).
+
+- REND PAGO APLIC AUT MAIS: Sem par. rendimento de aplicação, não é cliente.
+- TED 341 MARIA APARECID SOUZ: Certo com Maria Aparecida Souza 1/3. nome cortado pelo banco (APARECID, SOUZ), valor da parcela 1/3, 1 dia depois do vencimento.
+- PIX RECEBIDO FERNANDA P QUEIROZ: Certo com Fernanda Prado Queiroz 10/12 + Fernanda Prado Queiroz 11/12. soma de 2 parcelas pagas juntas.
+- PIX RECEB 123.456.789-00: Certo com Padaria Pão Dourado Ltda. CPF do sócio Ricardo Menezes.
+- PIX RECEBIDO J SILVA ADV: Certo com Roberto Tavares Lins 1/4. J SILVA = Joaquim Silva, advogado da parte devedora no processo.
+- DEP JUDICIAL TJSP 0001234: Certo com Construtora Horizonte Ltda (êxito). o número 0001234 está no processo.
+- DOC RECEBIDO: Conferir. R$ 2.000,00 bate com a Construtora e com a Clínica, sem nome.
+- PIX RECEBIDO PAULO REZENDE: Conferir. homônimo: Paulo Rezende (Construtora) e Paulo Rezende Filho (Clínica), os dois com R$ 950,00.
+- PIX RECEBIDO JOSEFA TEIXEIRA: Sem par. ninguém com esse nome nem esse valor.
+- PIX RECEBIDO METALURGICA FERRAZ: Provável com Roberto Tavares Lins 2/4. parte devedora pagou a parcela 2/4 adiantada (a 1/4 já foi usada pelo J SILVA).
+
+Saídas (aluguel e tarifa) ficam de fora, porque a opção de conciliar saídas vem desligada.
+Totais: 5 conciliados, 3 a conferir (2 Conferir e 1 Provável), 2 sem par.
+Títulos ainda em aberto: 6 (Construtora R$ 2.000,00 e R$ 950,00, Maria Aparecida 2/3, Roberto 2/4, Clínica R$ 2.000,00 e R$ 950,00).
+
+Para testar a regra aprendida: no lançamento DOC RECEBIDO, escolha a Clínica Bem Estar, confirme e use Aprender com o texto DOC RECEBIDO.
+Na próxima conciliação ele já vem como Certo.

@@ -1,0 +1,65 @@
+{
+  "ferramenta": "conciliacao-inteligente",
+  "versao": 1,
+  "salvoEm": "2026-11-24T12:00:00.000Z",
+  "dados": {
+    "versao": 1,
+    "empresas": [
+      {
+        "id": "exemplo-escritorio",
+        "nome": "Escritório Modelo Advocacia",
+        "pagadores": [
+          {
+            "id": "pag1",
+            "nome": "Metalúrgica Ferraz Ltda",
+            "cliente": "",
+            "processo": "1009876-11.2026.5.02.0011",
+            "cpf": "12345678000190",
+            "papel": "Parte devedora"
+          },
+          {
+            "id": "pag2",
+            "nome": "Joaquim Silva",
+            "cliente": "",
+            "processo": "1009876-11.2026.5.02.0011",
+            "cpf": "",
+            "papel": "Advogado da parte"
+          },
+          {
+            "id": "pag3",
+            "nome": "Ricardo Menezes",
+            "cliente": "Padaria Pão Dourado Ltda",
+            "processo": "",
+            "cpf": "12345678900",
+            "papel": "Sócio"
+          },
+          {
+            "id": "pag4",
+            "nome": "Paulo Rezende",
+            "cliente": "Construtora Horizonte Ltda",
+            "processo": "",
+            "cpf": "",
+            "papel": "Sócio"
+          },
+          {
+            "id": "pag5",
+            "nome": "Paulo Rezende Filho",
+            "cliente": "Clínica Bem Estar Ltda",
+            "processo": "",
+            "cpf": "",
+            "papel": "Sócio"
+          }
+        ],
+        "regras": [],
+        "opcoes": {
+          "tolerancia": 0.05,
+          "diasAntes": 10,
+          "diasDepois": 45,
+          "saidas": false
+        }
+      }
+    ],
+    "selecionada": "exemplo-escritorio",
+    "ultimoBackup": null
+  }
+}

@@ -125,7 +125,9 @@ td.neg{color:var(--vermelho)}
   .pagina{padding:18px 14px 80px}
   h1{font-size:23px}
   .duas{grid-template-columns:1fr}
-  .abas-ferramentas{margin-left:0;width:100%}
+  .abas-ferramentas{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .abas-ferramentas::-webkit-scrollbar{display:none}
+  .abas-ferramentas a{white-space:nowrap;flex:none}
   .bh{grid-template-columns:100px 1fr auto}
   .bh-valor{min-width:80px}
 }

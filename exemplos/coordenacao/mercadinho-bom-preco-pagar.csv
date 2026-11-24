@@ -1,0 +1,7 @@
+Vencimento;Fornecedor;Descrição;Valor (R$);Status
+15/10/2026;Distribuidora Norte;Mercadorias;3.200,00;Atrasado
+23/11/2026;Gás Fácil;Gás;210,00;Em aberto
+01/12/2026;Atacado Bom;Bebidas;1.500,00;Em aberto
+02/12/2026;Limpeza Total;Produtos de limpeza;400,00;Em aberto
+21/11/2026;Frios Bons;Frios;1.000,00;Pago
+;TOTAL;;6.310,00;

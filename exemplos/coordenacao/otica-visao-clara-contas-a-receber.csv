@@ -1,0 +1,6 @@
+Vencimento;Contato;Descrição;Categoria;Valor;Status
+16/11/2026;Maria Silva;"Óculos, parcela 2";Vendas;320,00;Vencido
+21/11/2026;João Pereira;"Óculos de grau";Vendas;1.150,00;Vencido
+25/11/2026;Carla Dias;"Parcela 1";Vendas;410,00;A vencer
+14/11/2026;Pedro Alves;"Óculos de sol";Vendas;700,00;Recebido
+;;;Total;2.580,00;

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recorrentes para o Conta Azul | Ferramentas do BPO</title>
+<meta name="description" content="Arraste os extratos de 12 meses do cliente novo e veja tudo o que se repete (aluguel, folha, impostos, assinaturas, recebimentos), pronto para o modelo de importação do Conta Azul.">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+<header class="barra"><div class="barra-dentro">
+  <a class="marca" href="index.html"><span class="logo">B</span><span><b>Ferramentas do BPO</b><small>Cláudia Bernardo</small></span></a>
+  <nav class="abas-ferramentas" aria-label="Ferramentas">
+    <a href="index.html">Início</a>
+    <a href="dre.html">DRE e painel</a>
+    <a href="volume.html">Monitor de volume</a>
+    <a href="margem.html">Vendas e margem</a>
+    <a href="onboarding.html" class="ativo">Recorrentes</a>
+    <a href="coordenacao.html">Coordenação</a>
+    <a href="conciliar.html">Conciliação</a>
+  </nav>
+</div></header>
+
+<main class="pagina">
+  <h1>Recorrentes para o Conta Azul</h1>
+  <p class="sub">Cliente novo, sem sistema e sem controle? Arraste os extratos dos últimos 12 meses. A ferramenta mostra tudo o que se repete (aluguel, folha, impostos, contas de consumo, assinaturas, recebimentos de clientes) e preenche o modelo de importação que você baixa do Conta Azul do cliente.</p>
+
+  <div id="avisos-topo"></div>
+
+  <div class="botoes onb-topo">
+    <button type="button" class="btn" id="btn-backup">Salvar backup</button>
+    <button type="button" class="btn" id="btn-restaurar">Restaurar backup</button>
+  </div>
+
+  <section class="passo" id="passo-extratos">
+    <div class="passo-titulo"><span class="passo-num">1</span><h2>Cliente e extratos</h2></div>
+    <p class="onb-dica">Escreva um apelido para o cliente: a ferramenta lembra, para ele, o que você excluiu ou renomeou. Depois solte os extratos de uma vez (uma ou mais contas, até uns 12 meses). Excel, CSV ou OFX do banco.</p>
+    <div class="linha-campos">
+      <label class="campo"><span>Cliente (apelido)</span><input id="cliente-nome" list="lista-clientes" maxlength="80" placeholder="Ex.: Escritório Modelo" autocomplete="off"></label>
+    </div>
+    <datalist id="lista-clientes"></datalist>
+    <div id="area-extratos" class="onb-area"></div>
+    <div id="arquivos"></div>
+    <div id="resumo-extratos"></div>
+  </section>
+
+  <section class="passo" id="passo-revisar">
+    <div class="passo-titulo"><span class="passo-num">2</span><h2>Revise o que se repete</h2></div>
+    <p class="onb-dica">Recorrente é o que aparece em pelo menos alguns meses diferentes, num ritmo que dá para reconhecer (mensal, bimestral, trimestral, semestral ou anual). Desmarque o que não serve e acerte nomes, categorias e valores. A categoria é só sugestão.</p>
+    <div class="linha-campos onb-config">
+      <label class="campo"><span>Aparecer em pelo menos quantos meses</span><input id="min-meses" type="number" min="2" max="12" step="1" inputmode="numeric"></label>
+    </div>
+    <div id="revisao"><div class="nota info">Traga os extratos no passo 1 para ver a lista.</div></div>
+  </section>
+
+  <section class="passo" id="passo-gerar">
+    <div class="passo-titulo"><span class="passo-num">3</span><h2>Gere a planilha de importação</h2></div>
+    <p class="onb-dica">Baixe o modelo de importação de contas a pagar ou a receber dentro do Conta Azul do cliente e arraste aqui. A ferramenta lê as colunas do próprio modelo, preenche uma linha por vencimento e mantém o nome da aba e as linhas de instrução de cima.</p>
+    <div class="linha-campos onb-config">
+      <label class="campo"><span>Começar no mês</span><input id="mes-inicial" type="month"></label>
+      <label class="campo"><span>Por quantos meses</span><input id="meses-gerar" type="number" min="1" max="36" step="1" inputmode="numeric"></label>
+      <label class="campo"><span>O que gerar</span><select id="gerar-tipos"></select></label>
+    </div>
+    <div id="area-modelo" class="onb-area"></div>
+    <div id="modelo"></div>
+    <div class="botoes onb-baixar">
+      <button type="button" class="btn btn-forte" id="btn-gerar" disabled>Baixar planilha preenchida</button>
+      <button type="button" class="btn" id="btn-simples">Baixar planilha simples (sem modelo)</button>
+      <button type="button" class="btn" id="btn-lista">Baixar lista de recorrentes</button>
+      <span id="gerar-motivo" class="onb-motivo"></span>
+    </div>
+    <div id="previa"></div>
+    <div class="nota atencao"><b>Antes de importar:</b> confira as categorias e os nomes dos fornecedores e clientes com os que já estão cadastrados no Conta Azul do cliente. Nome escrito diferente pode virar cadastro novo. A planilha simples não é o modelo oficial: use só para conferir ou copiar.</div>
+  </section>
+
+  <p class="rodape">Seus dados ficam só neste navegador. Nada é enviado para a internet.<br>Conta Azul é marca de seu dono; esta ferramenta não tem vínculo com ele.</p>
+</main>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="comum.js"></script>
+<script src="ui.js"></script>
+<script src="volume-logica.js"></script>
+<script src="onboarding-logica.js"></script>
+<script src="onboarding-app.js"></script>
+</body>
+</html>

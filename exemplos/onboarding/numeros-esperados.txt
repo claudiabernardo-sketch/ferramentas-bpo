@@ -1,0 +1,41 @@
+RECORRENTES PARA O CONTA AZUL: NÚMEROS ESPERADOS DOS EXEMPLOS
+
+Cliente fictício: Escritório Modelo. Extratos de dezembro de 2025 a novembro de 2026 (12 meses). Mínimo de meses: 3.
+O arquivo modelo_importacao_EXEMPLO.xlsx é um modelo GENÉRICO de teste. Não é o modelo oficial do Conta Azul.
+
+Leitura dos extratos:
+  escritorio-modelo-conta-corrente-dez25-a-nov26.xlsx: 151 lançamentos (13 linhas de saldo e 1 de total ignoradas)
+  escritorio-modelo-conta-digital-dez25-a-nov26.csv: 39 lançamentos (2 linhas de saldo ignoradas)
+
+Recorrentes achados: 16 (14 já marcados para incluir). Avulsos que ficaram de fora: 8.
+
+  [x] Pagar   | Imobiliaria Lar Ltda | Aluguel e condomínio | dia 5 | mensal | R$ 3.500,00 | 12 vezes
+  [x] Pagar   | Maria Souza | Folha e salários | dia 5 | mensal | R$ 2.200,00 | 12 vezes
+  [x] Pagar   | Joao Lima | Folha e salários | dia 5 | mensal | R$ 1.900,00 | 12 vezes
+  [ ] Pagar   | Porto Seguro Empresa | Seguros | dia 18 | anual | R$ 1.890,00 | 1 vez | apareceu 1 vez: confira se é anual
+  [x] Pagar   | DAS Simples Nacional | Impostos e taxas | dia 20 | mensal | R$ 1.057,15 (variável) | 12 vezes | valor variável: sugeri a média dos últimos 3
+  [x] Pagar   | Contabilidade Exata | Contabilidade | dia 10 | mensal | R$ 650,00 | 12 vezes
+  [x] Pagar   | CEMIG Distribuicao | Energia elétrica | dia 12 | mensal | R$ 451,98 (variável) | 12 vezes | valor variável: sugeri a média dos últimos 3
+  [x] Pagar   | Tributo Prefeitura IPTU | Impostos e taxas | dia 10 | mensal | R$ 420,00 | 9 vezes | parcelado: vi a 9 de 10, faltam 1
+  [x] Pagar   | SABESP | Água e esgoto | dia 22 | mensal | R$ 150,74 (variável) | 12 vezes | valor variável: sugeri a média dos últimos 3
+  [x] Pagar   | Vivo Fibra | Internet e telefone | dia 15 | mensal | R$ 149,90 | 12 vezes
+  [x] Pagar   | Pacote Servicos | Tarifas bancárias | dia 1 | mensal | R$ 59,90 | 12 vezes
+  [x] Pagar   | Google Workspace | Sistemas e assinaturas | dia 3 | mensal | R$ 45,00 | 12 vezes
+  [ ] Pagar   | MP Canva | Sistemas e assinaturas | dia 8 | mensal | R$ 34,90 | 9 vezes | parou de aparecer há 3 meses: talvez cancelado
+  [x] Receber | Clinica Bem Estar Ltda | Recebimento de clientes | dia 10 | mensal | R$ 2.500,00 | 12 vezes
+  [x] Receber | Padaria Pao Bom | Recebimento de clientes | dia 15 | mensal | R$ 1.800,00 | 12 vezes
+  [x] Receber | Mercado Boa Vista | Recebimento de clientes | dia 25 | mensal | R$ 1.431,83 (variável) | 12 vezes | valor variável: sugeri a média dos últimos 3
+
+Avulsos (não recorrentes):
+  Posto Shell (pagar, 4 vezes, meses fev/26 jul/26 ago/26 out/26)
+  Padaria do Ze (pagar, 3 vezes, meses dez/25 jan/26 jun/26)
+  Leroy Merlin (pagar, 2 vezes, meses jan/26 jun/26)
+  Amazon Marketplace (pagar, 2 vezes, meses mar/26 set/26)
+  Fulano Eventos (pagar, 1 vez, meses mai/26)
+  Venda Avulsa (receber, 1 vez, meses jul/26)
+  Jose Pereira (pagar, 1 vez, meses abr/26)
+  Kalunga (pagar, 1 vez, meses fev/26)
+
+Gerando a partir de dezembro de 2026 por 12 meses, só os marcados: 157 linhas (121 a pagar e 36 a receber).
+  O IPTU gera só 1 linha (10/10 em 10/12/2026). A energia sai com R$ 451,98 (média dos últimos 3 meses).
+  Se marcar o seguro anual, ele entra 1 vez, em 18/03/2027. Se marcar o Canva, entra 12 vezes no dia 8.

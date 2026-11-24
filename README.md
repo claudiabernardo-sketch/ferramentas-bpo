@@ -1,6 +1,6 @@
 # Ferramentas do BPO
 
-Três ferramentas para quem faz BPO Financeiro. Você exporta o relatório do sistema do cliente (Conta Azul, Nibo, Omie, o sistema da loja ou o banco), arrasta para a página e vê o resultado.
+Seis ferramentas para quem faz BPO Financeiro. Você exporta o relatório do sistema do cliente (Conta Azul, Nibo, Omie, o sistema da loja ou o banco), arrasta para a página e vê o resultado.
 
 **Para usar, é só abrir:** https://claudiabernardo-sketch.github.io/ferramentas-bpo/
 
@@ -25,6 +25,17 @@ Conta os lançamentos de cada cliente por mês a partir dos extratos (Excel, CSV
 Cruza as vendas do sistema com as vendas da maquininha, dia a dia.
 - Mostra o que não bate, inclusive venda lançada com a forma de pagamento errada.
 - Calcula quanto sobrou depois do imposto, do custo da mercadoria (CMV) e das taxas de cartão.
+
+### Recorrentes para o Conta Azul
+Para o onboarding de cliente sem controle nenhum.
+- Lê o extrato de até 12 meses e acha o que se repete: aluguel, folha, impostos, assinaturas, recebimentos de clientes. Avisa o que parece ter sido cancelado e deixa de fora as compras avulsas.
+- Preenche o **modelo de importação baixado do próprio Conta Azul**, uma linha por vencimento. A ferramenta não inventa o formato: ela lê as colunas do modelo que você arrasta.
+
+### Painel da coordenação
+Empresas por assistente, contas a pagar e a receber vencidas, o que vence nos próximos 7 dias e conciliações paradas, com selos de Em dia, Atenção e Urgente. Funciona com os relatórios exportados do sistema de cada cliente.
+
+### Conciliação inteligente
+Acha de quem é cada recebimento mesmo quando quem paga não é o cliente (por exemplo, a parte devedora ou o advogado dela): pedaços do nome, CPF ou CNPJ, valor da parcela, soma de parcelas e regras que você ensina uma vez. Sempre mostra o motivo, e quem confirma é você.
 
 Para conferir se o dinheiro da maquininha caiu no banco, use o [Concilia](https://github.com/claudiabernardo-sketch/concilia).
 
@@ -57,7 +68,7 @@ Baixe https://github.com/claudiabernardo-sketch/ferramentas-bpo para esta pasta 
 - `comum.js`: leitura de planilhas, números e datas, sem tela.
 - `ui.js` e `estilo.css`: peças de tela comuns.
 - `dre-logica.js`, `volume-logica.js`, `margem-logica.js`: as contas de cada ferramenta, sem tela.
-- `testes/`: mais de 450 testes. Rode, por exemplo, `node testes/testar_dre.js`.
+- `testes/`: mais de 800 testes. Rode, por exemplo, `node testes/testar_dre.js`.
 - `vendor/xlsx.full.min.js`: SheetJS Community Edition 0.18.5 (licença Apache 2.0, em `vendor/LICENSE-sheetjs.txt`), para ler Excel no navegador.
 
 ---

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conciliação inteligente | Ferramentas do BPO</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="conciliar.css">
+</head>
+<body>
+<header class="barra"><div class="barra-dentro">
+  <a class="marca" href="index.html"><span class="logo">B</span><span><b>Ferramentas do BPO</b><small>Cláudia Bernardo</small></span></a>
+  <nav class="abas-ferramentas">
+    <a href="index.html">Início</a>
+    <a href="dre.html">DRE e painel</a>
+    <a href="volume.html">Monitor de volume</a>
+    <a href="margem.html">Vendas e margem</a>
+    <a href="onboarding.html">Recorrentes</a>
+    <a href="coordenacao.html">Coordenação</a>
+    <a href="conciliar.html" class="ativo">Conciliação</a>
+  </nav>
+</div></header>
+
+<main class="pagina">
+  <h1>Conciliação inteligente</h1>
+  <p class="sub">Para cada entrada do extrato, a ferramenta procura o título em aberto que ela paga: pelo valor, pela data e por pedaços do nome no histórico do banco. Vale também para quem paga no lugar do cliente (parte devedora, advogado da parte, sócio). Você ensina regras e ela lembra na próxima vez. Cada sugestão diz o motivo.</p>
+
+  <div id="avisos-topo"></div>
+
+  <div class="botoes con-topo">
+    <button type="button" class="btn" id="btn-backup">Salvar backup</button>
+    <button type="button" class="btn" id="btn-restaurar">Restaurar backup</button>
+  </div>
+
+  <section class="passo" id="passo-empresa">
+    <div class="passo-titulo"><span class="passo-num">1</span><h2>Empresa atendida</h2></div>
+    <p class="con-dica">Escolha a empresa do BPO. Os pagadores e as regras que você ensinar ficam guardados nela.</p>
+    <div class="linha-campos con-form">
+      <label class="campo"><span>Empresa</span><select id="empresa"></select></label>
+      <form id="form-empresa" class="campo con-nova" autocomplete="off">
+        <span>Cadastrar outra empresa</span>
+        <div class="con-junto"><input id="nova-empresa" maxlength="80" placeholder="Ex.: Escritório Modelo"><button type="submit" class="btn">Adicionar</button></div>
+      </form>
+    </div>
+    <div class="botoes con-acoes" id="acoes-empresa">
+      <button type="button" class="btn" id="btn-exportar">Exportar regras desta empresa</button>
+      <button type="button" class="btn" id="btn-importar">Importar regras</button>
+      <button type="button" class="btn" id="btn-renomear">Renomear</button>
+      <button type="button" class="btn btn-perigo" id="btn-excluir">Excluir empresa</button>
+    </div>
+    <details class="con-opcoes" id="opcoes">
+      <summary>Opções de comparação</summary>
+      <div class="linha-campos con-form">
+        <label class="campo"><span>Diferença aceita no valor (R$)</span><input id="op-tol" inputmode="decimal"></label>
+        <label class="campo"><span>Dias antes do vencimento</span><input id="op-antes" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo"><span>Dias depois do vencimento</span><input id="op-depois" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="campo con-check"><input id="op-saidas" type="checkbox"><span>Conciliar também as saídas contra as contas a pagar</span></label>
+      </div>
+    </details>
+  </section>
+
+  <section class="passo" id="passo-extrato">
+    <div class="passo-titulo"><span class="passo-num">2</span><h2>Extrato do banco</h2></div>
+    <p class="con-dica">Excel, CSV ou OFX. Pode trazer mais de uma conta. Por padrão a ferramenta olha só as entradas (recebimentos).</p>
+    <div id="area-extrato"></div>
+    <div id="lista-extrato"></div>
+  </section>
+
+  <section class="passo" id="passo-titulos">
+    <div class="passo-titulo"><span class="passo-num">3</span><h2>Contas a receber em aberto</h2></div>
+    <p class="con-dica">Exporte do sistema (Conta Azul, Nibo, Omie) só os títulos em aberto. Precisa de Vencimento, Valor e Cliente. Descrição, Observações e número do processo ajudam: tudo isso entra na busca.</p>
+    <div id="area-titulos"></div>
+    <div id="lista-titulos"></div>
+    <div id="bloco-pagar" hidden>
+      <h3 class="con-h3">Contas a pagar em aberto</h3>
+      <div id="area-pagar"></div>
+      <div id="lista-pagar"></div>
+    </div>
+  </section>
+
+  <section class="passo" id="passo-pagadores">
+    <div class="passo-titulo"><span class="passo-num">4</span><h2>Quem pode pagar (opcional)</h2></div>
+    <p class="con-dica">Cadastre os nomes que aparecem no extrato pagando por um cliente ou por um processo: parte devedora, advogado da parte, sócio, empresa do grupo. Basta um pedaço que o banco mostre.</p>
+    <form id="form-pagador" class="linha-campos con-form" autocomplete="off">
+      <label class="campo"><span>Nome do pagador</span><input id="pg-nome" maxlength="120" placeholder="Ex.: Joaquim Silva"></label>
+      <label class="campo"><span>Quem é</span><select id="pg-papel"></select></label>
+      <label class="campo"><span>Paga pelo cliente</span><input id="pg-cliente" maxlength="120" list="lista-clientes" placeholder="Nome do cliente"></label>
+      <label class="campo"><span>ou pelo processo / título</span><input id="pg-processo" maxlength="60" placeholder="Nº do processo"></label>
+      <label class="campo"><span>CPF/CNPJ (opcional)</span><input id="pg-cpf" maxlength="20" inputmode="numeric"></label>
+      <div class="campo con-campo-botao"><button type="submit" class="btn btn-forte">Adicionar pagador</button></div>
+    </form>
+    <datalist id="lista-clientes"></datalist>
+    <details class="con-importar">
+      <summary>Importar uma planilha de pagadores</summary>
+      <p class="con-dica">Colunas: Cliente ou Processo, Nome do pagador, e se tiver, CPF/CNPJ e Papel.</p>
+      <div id="area-pagadores"></div>
+      <div id="lista-pagadores-arq"></div>
+    </details>
+    <div id="pagadores"></div>
+    <h3 class="con-h3">Regras aprendidas</h3>
+    <div id="regras"></div>
+  </section>
+
+  <section class="passo" id="passo-conciliar">
+    <div class="passo-titulo"><span class="passo-num">5</span><h2>Revisão</h2></div>
+    <div class="botoes">
+      <button type="button" class="btn btn-forte" id="btn-conciliar">Conciliar agora</button>
+      <span id="conciliar-motivo" class="con-motivo"></span>
+    </div>
+    <div id="revisao"></div>
+  </section>
+
+  <section class="passo" id="passo-resultado" hidden>
+    <div class="passo-titulo"><span class="passo-num">6</span><h2>Resultado</h2></div>
+    <div id="resultado"></div>
+  </section>
+
+  <p class="rodape">Seus dados ficam só neste navegador. Nada é enviado para a internet. A baixa no sistema é feita por você: a ferramenta só aponta o par.</p>
+</main>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="comum.js"></script>
+<script src="ui.js"></script>
+<script src="volume-logica.js"></script>
+<script src="conciliar-logica.js"></script>
+<script src="conciliar-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* Painel da coordenação: ajustes próprios (o resto vem de estilo.css) */
+.co-topo{margin-top:14px}
+.co-dica{color:var(--medio);font-size:14px;margin-bottom:10px;max-width:860px}
+.co-form{border:1px solid var(--linha);border-radius:12px;padding:12px 14px;background:var(--papel)}
+.co-form .linha-campos{align-items:end}
+.co-campo-botao{justify-content:flex-end}
+.co-duas{margin-top:4px}
+.co-bloco{margin-top:14px}
+.co-bloco>summary{cursor:pointer;font-weight:700;color:var(--azul-escuro);padding:4px 0}
+.co-bloco[open]>summary{margin-bottom:8px}
+.co-area{margin-top:12px}
+.co-guardar{margin-top:14px}
+.co-motivo{color:var(--vermelho);font-size:13.5px}
+
+/* equipe */
+.co-equipe{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.co-pessoa{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.co-pessoa input{flex:1 1 180px;min-width:0;border:1px solid var(--linha);border-radius:8px;padding:7px 9px;background:#fff}
+.co-pessoa small{color:var(--medio)}
+.co-carteira input,.co-carteira select{border:1px solid var(--linha);border-radius:8px;padding:6px 8px;background:#fff;min-width:150px;max-width:260px}
+.co-x{border:0;background:none;color:var(--vermelho);font-weight:700;padding:4px 6px}
+
+/* arquivos */
+.co-arquivo{border:1px solid var(--linha);border-radius:12px;padding:14px;margin-top:12px;background:var(--papel)}
+.co-arquivo.com-erro{border-color:var(--vermelho);background:var(--vermelho-fundo)}
+.co-arquivo.pronto{border-color:#BFE0CB}
+.co-arquivo-topo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.co-arquivo-topo b{color:var(--marinho);overflow-wrap:anywhere;min-width:0}
+.co-arquivo-topo .btn{margin-left:auto;padding:5px 10px;font-size:13px}
+.co-arquivo .linha-campos{margin-bottom:10px}
+.co-arquivo .campo select,.co-arquivo .campo input{width:100%}
+.co-resultado{margin-top:10px}
+.co-resultado ul{margin:6px 0 0 18px}
+details.co-ignoradas{margin-top:8px;font-size:13.5px}
+details.co-ignoradas summary{cursor:pointer;color:var(--azul-escuro);font-weight:600}
+details.co-ignoradas ul{margin:6px 0 0 18px;color:var(--medio);overflow-wrap:anywhere}
+
+/* painel */
+.co-ref{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px}
+.co-ref .campo{width:190px}
+.co-ref .co-dica{margin:0;flex:1 1 220px}
+.co-regras{margin-bottom:12px}
+#bloco-regras h3{margin-top:8px}
+.co-secao{margin-top:20px}
+.co-secao h3{margin-bottom:8px}
+.co-filtros{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:10px}
+.co-filtros .campo{flex:1 1 180px;max-width:260px}
+.co-filtros .co-conta{color:var(--medio);font-size:13.5px}
+.cartao.meio b{color:#8A6500}
+.co-painel td{vertical-align:top}
+.co-painel td small{display:block;color:var(--medio);font-size:12px;margin-top:2px;white-space:normal}
+.co-painel td.motivos{white-space:normal;min-width:200px;max-width:340px}
+.co-painel td.motivos ul{margin:4px 0 0 16px;font-size:12.5px;color:var(--texto)}
+.co-painel tr.urgente td:first-child{box-shadow:inset 4px 0 0 var(--vermelho)}
+.co-painel tr.atencao td:first-child{box-shadow:inset 4px 0 0 var(--amarelo)}
+.co-nome{font-weight:700;color:var(--marinho);background:none;border:0;padding:0;text-align:left;text-decoration:underline;text-underline-offset:3px;white-space:normal;min-width:110px}
+.co-painel input{border:1px solid var(--linha);border-radius:7px;padding:5px 7px;background:#fff}
+.co-painel input[type=number]{width:72px;text-align:right}
+.co-painel input[type=date]{width:140px}
+.co-painel .vermelho{color:var(--vermelho);font-weight:700}
+.co-painel .verde{color:var(--verde)}
+.so-imprimir{display:none}
+.co-vazio{color:var(--medio);padding:14px;white-space:normal}
+
+/* detalhe */
+.co-detalhe-topo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.co-detalhe-topo h2{margin:0}
+.co-detalhe-topo .btn{margin-left:auto}
+.co-detalhe td.quebra{white-space:normal;min-width:160px}
+.co-nota-final{margin-top:18px}
+
+@media (max-width:760px){
+  .co-detalhe-topo .btn,.co-arquivo-topo .btn{margin-left:0}
+  .co-ref .campo{width:100%}
+  .co-filtros .campo{max-width:none}
+}
+@media print{
+  .co-painel input{display:none}
+  .so-imprimir{display:inline}
+  .co-nota-final{display:none}
+  .co-painel tr{break-inside:avoid}
+}

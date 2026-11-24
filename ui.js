@@ -229,3 +229,12 @@
     nomeArquivo: nomeArquivo, lerJSON: lerJSON, escolherArquivo: escolherArquivo, lerLogo: lerLogo, navegadorGuarda: navegadorGuarda
   };
 })();
+
+// No celular o menu desliza para o lado: abre já mostrando a aba da página atual.
+(function () {
+  function mostrarAtiva() {
+    var nav = document.querySelector('.abas-ferramentas'), a = nav && nav.querySelector('.ativo');
+    if (nav && a && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, a.offsetLeft - nav.offsetLeft - 16);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mostrarAtiva); else mostrarAtiva();
+})();

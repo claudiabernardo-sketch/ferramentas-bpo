@@ -1,0 +1,70 @@
+/* Conciliação inteligente: só o que a base comum não tem */
+.con-topo{margin-top:14px}
+.con-dica{color:var(--medio);font-size:14px;margin-bottom:10px;max-width:820px}
+.con-form{align-items:end;margin-top:6px}
+.con-junto{display:flex;gap:6px}
+.con-junto input{flex:1 1 auto;min-width:0;border:1px solid var(--linha);border-radius:8px;padding:8px 9px;background:#fff}
+.con-acoes{margin-top:12px}
+.con-campo-botao{justify-content:flex-end}
+.con-check{flex-direction:row!important;align-items:center;gap:8px}
+.con-check input{width:18px!important;height:18px;flex:none}
+.con-check span{font-weight:600}
+.con-opcoes,.con-importar{margin-top:14px}
+.con-opcoes summary,.con-importar summary{cursor:pointer;font-weight:700;color:var(--azul-escuro);padding:4px 0}
+.con-h3{margin-top:18px}
+.con-motivo{color:var(--vermelho);font-size:13.5px}
+.con-vazio{color:var(--medio);font-size:14px;margin-top:8px}
+
+.con-arquivo{border:1px solid var(--linha);border-radius:12px;padding:14px;margin-top:12px;background:var(--papel)}
+.con-arquivo.com-erro{border-color:var(--vermelho);background:var(--vermelho-fundo)}
+.con-arquivo-topo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.con-arquivo-topo b{color:var(--marinho);overflow-wrap:anywhere;min-width:0}
+.con-arquivo-topo .btn{margin-left:auto;padding:5px 10px;font-size:13px}
+.con-arquivo .linha-campos{margin-bottom:10px}
+.con-lido{margin-top:10px}
+details.con-detalhes{margin-top:6px;font-size:13.5px}
+details.con-detalhes summary{cursor:pointer;color:var(--azul-escuro);font-weight:600}
+details.con-detalhes ul{margin:6px 0 0 18px;color:var(--medio);max-height:260px;overflow:auto;overflow-wrap:anywhere}
+
+.con-tabela{margin-top:10px}
+.con-tabela td.quebra{white-space:normal;min-width:140px;overflow-wrap:anywhere}
+.con-x{border:0;background:none;color:var(--vermelho);font-weight:700;padding:2px 4px}
+
+/* revisão */
+.con-cartoes{margin-top:14px}
+.con-filtros{margin:14px 0 6px}
+.con-filtros .btn{padding:6px 11px;font-size:13.5px}
+.con-item{border:1px solid var(--linha);border-left:5px solid var(--linha);border-radius:12px;padding:12px 14px;margin-top:10px;background:var(--branco);min-width:0}
+.con-item.st-certo,.con-item.st-confirmado{border-left-color:var(--verde)}
+.con-item.st-provavel,.con-item.st-conferir{border-left-color:var(--amarelo)}
+.con-item.st-sempar{border-left-color:var(--vermelho)}
+.con-item.st-nao{opacity:.75}
+.con-item-topo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.con-data{color:var(--medio);font-size:13.5px;font-variant-numeric:tabular-nums}
+.con-valor{color:var(--marinho);font-size:16px;font-variant-numeric:tabular-nums}
+.con-valor.neg{color:var(--vermelho)}
+.con-item-topo .selo{margin-left:auto}
+.con-hist{font-weight:700;color:var(--marinho);margin-top:4px;overflow-wrap:anywhere}
+.con-conta{color:var(--medio);font-size:12.5px;overflow-wrap:anywhere}
+.con-titulos{background:var(--verde-fundo);border-radius:8px;padding:7px 10px;margin-top:8px;font-size:14px;overflow-wrap:anywhere}
+.st-provavel .con-titulos{background:var(--amarelo-fundo)}
+.con-motivo-item{color:var(--texto);font-size:13.5px;margin-top:6px;overflow-wrap:anywhere}
+.con-botoes{margin-top:10px}
+.con-botoes .btn{padding:6px 11px;font-size:13.5px}
+.con-opcoes-lista{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.con-opcao{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--linha);border-radius:10px;padding:8px 10px;cursor:pointer;min-width:0}
+.con-opcao input{flex:none;width:18px;height:18px;margin-top:2px}
+.con-opcao span{min-width:0;overflow-wrap:anywhere;font-size:14px}
+.con-opcao b{display:block;color:var(--marinho);font-weight:600}
+.con-opcao small{display:block;color:var(--medio);font-size:12.5px;margin-top:2px}
+.con-escolher,.con-aprender{border:1px dashed #B9C7DA;border-radius:10px;padding:10px 12px;margin-top:10px;background:var(--papel);display:flex;flex-direction:column;gap:8px}
+.con-escolher select{max-width:100%}
+.con-aprender input:not([type]){border:1px solid var(--linha);border-radius:8px;padding:8px 9px;background:#fff;width:100%;max-width:420px}
+.con-aprender .con-dica{margin:0}
+.con-baixar{margin-top:14px}
+.cartao.meio b{color:#8A6500}
+
+@media (max-width:760px){
+  .con-arquivo-topo .btn{margin-left:0}
+  .con-item-topo .selo{margin-left:0}
+}
